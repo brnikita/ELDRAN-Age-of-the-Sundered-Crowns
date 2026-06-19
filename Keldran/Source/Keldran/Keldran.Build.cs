@@ -7,15 +7,25 @@ public class Keldran : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		// Kept minimal for a clean first compile. GAS/UMG/AI deps are added in M1-2/M2 as the
-		// KeldranCore/Abilities/etc. modules come online (Docs/00_ImplementationSpec.md).
+		// Primary game module depends on all domain modules so they compile & link into every
+		// target (Docs/00_ImplementationSpec.md module map). Domain modules carry their own deps.
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core",
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-			"EnhancedInput"
+			"EnhancedInput",
+			"KeldranCore",
+			"KeldranCharacter",
+			"KeldranAbilities",
+			"KeldranInventory",
+			"KeldranQuests",
+			"KeldranAI",
+			"KeldranNet",
+			"KeldranUI",
+			"KeldranServer",
+			"KeldranTests"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

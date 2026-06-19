@@ -4,11 +4,17 @@
 	"Category": "",
 	"Description": "KELDRAN: Age of the Sundered Crowns — open-world PvE MMORPG.",
 	"Modules": [
-		{
-			"Name": "Keldran",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
+		{ "Name": "Keldran", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranCore", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranCharacter", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranAbilities", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranInventory", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranQuests", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranAI", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranNet", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranUI", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranServer", "Type": "Runtime", "LoadingPhase": "Default" },
+		{ "Name": "KeldranTests", "Type": "Runtime", "LoadingPhase": "Default" }
 	],
 	"Plugins": [
 		{ "Name": "EnhancedInput", "Enabled": true },
