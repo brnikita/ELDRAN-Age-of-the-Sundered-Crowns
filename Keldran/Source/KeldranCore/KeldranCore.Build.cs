@@ -11,6 +11,7 @@ public class KeldranCore : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"NetCore",
 			"GameplayTags"
 		});
 	}

@@ -115,10 +115,28 @@
 3. **GPU + PSU**: GTX 750 → plan RTX 3060 12GB (PCIe x16, best fit for the X99/PCIe-3.0 board)
    or RTX 5060 Ti 16GB. Awaiting PSU wattage + PCIe 8-pin confirmation. Also add RAM to 32 GB.
 
-## NEXT (GPU-free, no user needed — autonomous)
-- M1-2: author `Source/Keldran{Core,Character,Abilities,Inventory,Quests,AI,Net,UI,Server,Tests}`
-  module skeletons + wire deps; verify each via headless game-target compile.
-- M1-11: test harness module + first automation tests (compile headless; full run needs editor).
+## 2026-06-20 | M1-2,M1-3,M1-4 | DONE
+- M1-2: 10 domain modules authored + compiled (committed 5edb28d).
+- M1-3: KeldranCore classes — GameInstance, AssetManager, GameMode/State, PlayerState
+  (replicated Level/XP; ASC deferred to M2), native GameplayTags. Wired GameInstance +
+  AssetManager in DefaultEngine.ini. Added NetCore dep.
+- M1-4: KeldranNet — GatewayClient (async HTTP login), SessionSubsystem (login orchestration),
+  GameSession (ApproveLogin ticket gate; full /auth/verify in M1-9).
+- build: PASS (game target, 155s, no warnings). tests: n-a (PIE/editor gated). gauntlet: n-a.
+- **MEMORY FIX (important):** 16 GB RAM made UBA thrash (kill-retry loop on commit-limit). Added
+  `%APPDATA%/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml` disabling UBA + capping
+  MaxProcessorCount=2. Builds now reliable (slower). Remove cap after 32 GB RAM upgrade.
+  Workflow: `docker compose stop` before builds to free RAM; `wsl --shutdown` if commit saturates.
+- fixes: BlueprintCallable can't take multicast delegate param → single-cast DYNAMIC_DELEGATE;
+  PreLogin is on GameMode not GameSession → use AGameSession::ApproveLogin.
+- resume here: M1-9 (wire client login→/play→ClientTravel + server /auth/verify) and M1-11 (test
+  harness) — both authorable headless. M1 editor DoD (empty client+server connect, PIE) still
+  needs the .NET FW SDK + MCP enable.
+
+## NEXT (GPU-free, autonomous)
+- M1-9: complete the gateway client (characters/play/persistence calls) + server-side ticket
+  verify in ApproveLogin; wire SessionSubsystem to ClientTravel.
+- M1-11: KeldranTests automation tests (compile headless; full run needs editor/-nullrhi).
 - Then M1 is **gated on Phase A** (user installs UE 5.8 + plugins + MCP + accounts + API keys).
   M1-5/M1-6/M1-7 (backend, Docker) and M1-10 (gen pipeline) can begin as soon as API keys +
   Docker are available, even before the editor is fully set up. M1-1..M1-4, M1-9, M1-11..M1-12
