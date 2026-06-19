@@ -18,4 +18,12 @@ public:
 	/** Input slot tag (Input.Ability.SlotN) this ability binds to. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Keldran|Ability")
 	FGameplayTag InputTag;
+
+protected:
+	/** Nearest other pawn with an ASC within Range in front of the avatar (melee target). */
+	AActor* FindMeleeTargetActor(float Range) const;
+
+	/** Build EffectClass spec (with SetByCaller Data.Damage=DamageMagnitude) and apply to Target. */
+	void ApplyEffectToActor(AActor* TargetActor, TSubclassOf<class UGameplayEffect> EffectClass,
+		float DamageMagnitude);
 };
