@@ -20,6 +20,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Keldran|Net")
 	void BeginLogin(const FString& Email, const FString& Password);
 
+	/** Request /play for a character, then ClientTravel to the returned shard with the ticket.
+	 *  Requires a prior successful login (uses CachedSessionToken). Character selection is M2-16. */
+	UFUNCTION(BlueprintCallable, Category = "Keldran|Net")
+	void TravelToCharacter(const FString& CharacterId);
+
 	UPROPERTY(BlueprintReadOnly, Category = "Keldran|Net")
 	FString CachedSessionToken;
 
