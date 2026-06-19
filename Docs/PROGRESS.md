@@ -92,10 +92,33 @@
   GPU-free work (C++ compile, headless `-nullrhi` tests, cooking, backend, gen) is unaffected;
   rendered editor/playtest/Gauntlet need an RTX-class 12GB+ GPU. Awaiting user's GPU decision.
 
-## NEXT (all GPU-free, gated on the UE project existing)
-- M1-1..M1-2: project + `Source/Keldran*` modules + build targets (compile via UBT, no GPU).
-- M1-11: test harness (`Keldran.Data.Integrity`, originality) — headless.
-- M1-13: Git LFS for Content binaries.
+## 2026-06-20 | M1-1,M1-2 (partial),M1-13 | DONE
+- change: found engine at `B:\Programs\Epic Games\UE_5.8`. Hand-authored the UE C++ project
+  skeleton at `Keldran/` (so no Project Browser needed): `Keldran.uproject` (+plugins),
+  Game/Editor/Server `.Target.cs`, primary `Keldran` module (Build.cs/.h/.cpp), Config inis,
+  repo-root `.mcp.json` (HTTP http://127.0.0.1:8000/mcp). Set up Git LFS (`.gitattributes` for
+  .uasset/.umap + media; hooks installed) and un-ignored generated media.
+- build: PASS — `Build.bat Keldran Win64 Development` => Result: Succeeded, Keldran.exe (345 MB)
+  produced. Toolchain: MSVC 14.50 (Build Tools 2026) + Win SDK 22621. Proves skeleton + the
+  user's toolchain work for UE 5.8. (Editor target NOT yet built — needs .NET Framework SDK.)
+- tests: n-a   gauntlet: n-a   commit: <this commit>
+- notes: RAM (16 GB) capped UBT to 1 parallel action → slow builds; user should add RAM to 32 GB.
+- resume here: M1-2 module split (KeldranCore/etc.) — can author + compile headless (game target,
+  GPU-free) without the user. Editor target + MCP gated on .NET FW SDK + the one editor click.
+
+## BLOCKERS (need the user)
+1. **.NET Framework 4.8 SDK** — add via Visual Studio Installer → Build Tools 2026 → Modify →
+   Individual components → ".NET Framework 4.8 SDK" (+ targeting pack) → Modify. Needed for the
+   Editor target (Swarm/Lightmass) → required to open the project + run Unreal MCP.
+2. **Enable Unreal MCP** in the editor (built-in 5.8): Edit>Plugins → "Unreal MCP" → Enabled;
+   Editor Preferences → Model Context Protocol → Auto Start Server on. (.mcp.json already at root.)
+3. **GPU + PSU**: GTX 750 → plan RTX 3060 12GB (PCIe x16, best fit for the X99/PCIe-3.0 board)
+   or RTX 5060 Ti 16GB. Awaiting PSU wattage + PCIe 8-pin confirmation. Also add RAM to 32 GB.
+
+## NEXT (GPU-free, no user needed — autonomous)
+- M1-2: author `Source/Keldran{Core,Character,Abilities,Inventory,Quests,AI,Net,UI,Server,Tests}`
+  module skeletons + wire deps; verify each via headless game-target compile.
+- M1-11: test harness module + first automation tests (compile headless; full run needs editor).
 - Then M1 is **gated on Phase A** (user installs UE 5.8 + plugins + MCP + accounts + API keys).
   M1-5/M1-6/M1-7 (backend, Docker) and M1-10 (gen pipeline) can begin as soon as API keys +
   Docker are available, even before the editor is fully set up. M1-1..M1-4, M1-9, M1-11..M1-12

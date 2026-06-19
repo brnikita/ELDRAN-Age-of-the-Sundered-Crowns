@@ -1,0 +1,21 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Category": "",
+	"Description": "KELDRAN: Age of the Sundered Crowns — open-world PvE MMORPG.",
+	"Modules": [
+		{
+			"Name": "Keldran",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{ "Name": "EnhancedInput", "Enabled": true },
+		{ "Name": "GameplayAbilities", "Enabled": true },
+		{ "Name": "ModelingToolsEditorMode", "Enabled": true },
+		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "EditorScriptingUtilities", "Enabled": true },
+		{ "Name": "RemoteControl", "Enabled": true }
+	]
+}
