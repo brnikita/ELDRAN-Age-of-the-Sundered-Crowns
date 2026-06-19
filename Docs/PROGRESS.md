@@ -44,8 +44,35 @@
   logins + API keys). Backend tasks (M1-5/6/7) and gen pipeline (M1-10) can start once Docker
   + API keys are available, before the editor is fully set up.
 
+## 2026-06-19 | M1-5,M1-6,M1-7,M1-8 | DONE
+- change: built the backend stack ahead of the UE work (doesn't need the editor). `Backend/`
+  with `docker-compose.yml` (Postgres 16, Redis 7, FastAPI gateway, FastAPI dialogue-service),
+  `db/migrations/001_init.sql` (schema per `02` §5), gateway (auth/login/verify, characters
+  CRUD, play handoff w/ single-use tickets, persistence load/save), dialogue-service (persona,
+  Redis cache, per-account rate-limit, guardrails, authored fallback, OpenRouter live). Secrets
+  via gitignored root `.env`; `.gitignore` + `Backend/.env.example` added.
+- build: pass (4 images build)   tests: pass (manual verification below)   gauntlet: n-a
+- commit: <this commit>
+- verification:
+  - all 4 containers HEALTHY; gateway `/health` + dialogue `/health` 200.
+  - auth: register→login→bad-login 401→create char→list→play(shard+ticket)→verify(consume)→
+    reuse-ticket 401 (single-use). ALL PASS.
+  - persistence: saved a level-5 snapshot (xp/coin/shards/inventory/quest) and reloaded it
+    intact → relog-persistence foundation proven.
+  - dialogue: live LLM reply in-character + on-setting; repeat hits cache; unknown NPC 404;
+    fallback path confirmed earlier.
+- fixes during build: (1) passlib+bcrypt 4.x 72-byte self-test crash → switched to
+  `pbkdf2_sha256`. (2) OpenRouter `llama-3.1-8b-instruct:free` retired & `llama-3.3-70b:free`
+  upstream-429 → default model now `google/gemma-4-31b-it:free` (verified reliable).
+- notes: OpenAI + ElevenLabs + OpenRouter keys all present in root `.env` (gitignored). OpenAI/
+  ElevenLabs are for M3 content gen (not exercised yet).
+- resume here: M1 UE side — **gated on Phase A editor setup** (Unreal MCP server reachable at
+  127.0.0.1:8000/mcp). Remaining standalone backend-adjacent task: M1-10 (gen pipeline).
+
 ## NEXT
-- M0-9: DONE (above).
+- M0-9: DONE. Backend M1-5..M1-8: DONE.
+- Available now without the editor: **M1-10** (AI generation pipeline `Tools/gen` + spend caps).
+- Gated on Phase A (editor + Unreal MCP): M1-1..M1-4, M1-9, M1-11, M1-12.
 - Then M1 is **gated on Phase A** (user installs UE 5.8 + plugins + MCP + accounts + API keys).
   M1-5/M1-6/M1-7 (backend, Docker) and M1-10 (gen pipeline) can begin as soon as API keys +
   Docker are available, even before the editor is fully set up. M1-1..M1-4, M1-9, M1-11..M1-12

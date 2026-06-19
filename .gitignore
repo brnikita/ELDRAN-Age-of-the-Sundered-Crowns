@@ -1,0 +1,39 @@
+# ---- Secrets (NEVER commit) ----
+.env
+*.env
+!*.env.example
+Backend/.env
+Tools/gen/.env
+
+# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+
+# ---- Generation cache / artifacts ----
+Docs/gen/cache/
+Docs/gen/manifest-*.jsonl
+
+# ---- Unreal Engine ----
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+*.VC.db
+*.opensdf
+*.sdf
+*.sln
+*.suo
+# Keep .uproject, Config/, Source/, Content/ tracked.
+# Large binary Content handled via Git LFS (configured in M1-13).
+
+# ---- OS ----
+Thumbs.db
+.DS_Store

@@ -1,0 +1,76 @@
+# KELDRAN backend — MVP topology (spec §4): one gateway + Postgres + Redis + dialogue service.
+# Bring up:  cd Backend && docker compose up --build
+# Health:    gateway http://localhost:8080/health , dialogue http://localhost:8090/health
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Migrations auto-applied on first init, in filename order:
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  gateway:
+    build: ./gateway
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET}
+      SESSION_TTL: ${SESSION_TTL}
+      DEFAULT_SHARD_ADDRESS: ${DEFAULT_SHARD_ADDRESS}
+    ports:
+      - "${GATEWAY_PORT}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:8080/health').status==200 else sys.exit(1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  dialogue-service:
+    build: ./dialogue-service
+    # API keys come from the gitignored root .env (single source of truth for secrets).
+    # Missing keys are fine: the service falls back to authored lines.
+    env_file:
+      - ../.env
+    environment:
+      REDIS_URL: redis://redis:6379/1
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-google/gemma-4-31b-it:free}
+      DIALOGUE_RATE_LIMIT_PER_MIN: ${DIALOGUE_RATE_LIMIT_PER_MIN:-20}
+    ports:
+      - "${DIALOGUE_PORT}:8090"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:8090/health').status==200 else sys.exit(1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
