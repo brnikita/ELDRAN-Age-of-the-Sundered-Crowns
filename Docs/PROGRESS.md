@@ -69,10 +69,33 @@
 - resume here: M1 UE side — **gated on Phase A editor setup** (Unreal MCP server reachable at
   127.0.0.1:8000/mcp). Remaining standalone backend-adjacent task: M1-10 (gen pipeline).
 
-## NEXT
-- M0-9: DONE. Backend M1-5..M1-8: DONE.
-- Available now without the editor: **M1-10** (AI generation pipeline `Tools/gen` + spend caps).
-- Gated on Phase A (editor + Unreal MCP): M1-1..M1-4, M1-9, M1-11, M1-12.
+## 2026-06-20 | M1-10 | DONE
+- change: built the AI generation pipeline `Tools/gen/` — `common.py` (root-.env secrets,
+  content-hash cache, spend cap, originality lint, JSONL manifest, dry-run), `gen_text.py`
+  (OpenRouter), `gen_images.py` (GPT Image 2), `gen_audio.py` (ElevenLabs) + prompt specs +
+  root `Makefile` (`make generate` / `generate-dry`).
+- build: n-a   tests: pass (live smoke + idempotency)   gauntlet: n-a
+- commit: <this commit>
+- verification: dry-run estimated $0.05; live smoke produced 3 real artifacts — bark JSON
+  (free), Doran VO mp3 (ElevenLabs, $0.01), shield-bash icon PNG (GPT Image 2, $0.04); all in
+  manifest with hashes + license; re-run = cached, $0 (idempotent).
+- fixes: ElevenLabs key lacks `voices_read` → use default premade voice id (no /voices call).
+- notes: generated binary media gitignored until M1-13 sets up Git LFS (regenerable from
+  committed prompt specs). OpenAI/ElevenLabs/OpenRouter keys all confirmed working.
+- resume here: UE editor side — gated on Phase A (user creating Keldran C++ project + MCP).
+
+## BLOCKER (needs the user — GUI, cannot self-authorize)
+- **Create the Keldran C++ project in UE 5.8 + enable the built-in Unreal MCP plugin**, then
+  run `ModelContextProtocol.GenerateClientConfig ClaudeCode` (writes `.mcp.json`) so Claude
+  Code can drive the editor. Until then M1-1..M1-4, M1-9, M1-11, M1-12 cannot proceed.
+- **Hardware:** user's GPU is a GTX 750 — below UE 5.8 reqs for the photorealistic target.
+  GPU-free work (C++ compile, headless `-nullrhi` tests, cooking, backend, gen) is unaffected;
+  rendered editor/playtest/Gauntlet need an RTX-class 12GB+ GPU. Awaiting user's GPU decision.
+
+## NEXT (all GPU-free, gated on the UE project existing)
+- M1-1..M1-2: project + `Source/Keldran*` modules + build targets (compile via UBT, no GPU).
+- M1-11: test harness (`Keldran.Data.Integrity`, originality) — headless.
+- M1-13: Git LFS for Content binaries.
 - Then M1 is **gated on Phase A** (user installs UE 5.8 + plugins + MCP + accounts + API keys).
   M1-5/M1-6/M1-7 (backend, Docker) and M1-10 (gen pipeline) can begin as soon as API keys +
   Docker are available, even before the editor is fully set up. M1-1..M1-4, M1-9, M1-11..M1-12

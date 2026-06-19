@@ -1,0 +1,13 @@
+# Build-time text generation specs (OpenRouter). One entry per output.
+# Output: JSON lines suitable for import into DataTables (Docs/01_DataSchemas.md §12 Barks).
+version: "1"
+items:
+  - id: bark.brambleback.aggro
+    kind: bark
+    count: 4
+    system: >
+      You write terse creature combat barks for a realistic high-fantasy MMO called Keldran.
+      No real-world references. Original setting only.
+    prompt: >
+      Write 4 very short aggro/attack barks (max 6 words each) for a Brambleback — a thorny
+      forest beast. Return as a JSON array of strings, nothing else.

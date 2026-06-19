@@ -1,0 +1,10 @@
+# ElevenLabs audio specs. One entry per VO/SFX/music clip.
+# Output: mp3 -> Content/Audio/{VO,SFX,Music}/... (Docs/03 §2), later wired into MetaSounds.
+version: "1"
+items:
+  - id: vo.doran-vale.greeting
+    kind: tts
+    out: Content/Audio/VO/doran_vale_greeting.mp3
+    # voice: optional ElevenLabs voice id; if omitted the generator picks the first available.
+    text: >
+      Rest while you can, Shardbearer. The woods have been restless since the tremor.

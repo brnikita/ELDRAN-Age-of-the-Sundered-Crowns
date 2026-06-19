@@ -1,0 +1,13 @@
+# GPT Image 2 specs (2D ONLY). One entry per icon/texture/frame.
+# Output: PNG -> Content/UI/Icons/... (Docs/03 §1). Shared style preamble for coherence.
+version: "1"
+style_preamble: >
+  Game ability icon, painterly realistic high-fantasy style, centered subject, dark neutral
+  background, soft rim light, cohesive with a weathered medieval-fantasy UI. No text, no border.
+items:
+  - id: icon.ability.shield-bash
+    out: Content/UI/Icons/Abilities/shield_bash.png
+    size: "1024x1024"
+    prompt: >
+      A round iron-banded wooden shield striking forward, motion impact, sparks at the rim,
+      emblem of a stylized seven-ring crest faintly visible.

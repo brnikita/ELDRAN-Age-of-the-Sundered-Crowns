@@ -19,6 +19,10 @@ npm-debug.log*
 # ---- Generation cache / artifacts ----
 Docs/gen/cache/
 Docs/gen/manifest-*.jsonl
+# Generated binary media — committed via Git LFS once M1-13 configures it. Regenerable
+# from the committed prompt specs via `make generate` (content-hash cached).
+Content/UI/Icons/
+Content/Audio/
 
 # ---- Unreal Engine ----
 Binaries/
