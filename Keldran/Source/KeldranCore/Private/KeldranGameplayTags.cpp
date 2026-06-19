@@ -6,6 +6,7 @@ UE_DEFINE_GAMEPLAY_TAG(Tag_Class_Warden, "Class.Warden");
 UE_DEFINE_GAMEPLAY_TAG(Tag_Input_Ability_Slot1, "Input.Ability.Slot1");
 UE_DEFINE_GAMEPLAY_TAG(Tag_Input_Ability_Slot2, "Input.Ability.Slot2");
 UE_DEFINE_GAMEPLAY_TAG(Tag_Input_Ability_Slot3, "Input.Ability.Slot3");
+UE_DEFINE_GAMEPLAY_TAG(Tag_Data_Damage, "Data.Damage");
 UE_DEFINE_GAMEPLAY_TAG(Tag_State_Dead, "State.Dead");
 UE_DEFINE_GAMEPLAY_TAG(Tag_State_Stunned, "State.Stunned");
 UE_DEFINE_GAMEPLAY_TAG(Tag_Faction_Covenant, "Faction.Covenant");
