@@ -11,9 +11,11 @@ public class KeldranAbilities : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"NetCore",
 			"GameplayAbilities",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
+			"KeldranCore"
 		});
 	}
 }
