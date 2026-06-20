@@ -12,7 +12,13 @@ public class KeldranAI : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"AIModule",
-			"GameplayTasks"
+			"GameplayTasks",
+			"GameplayAbilities",
+			"GameplayTags",
+			"KeldranCore",
+			"KeldranCharacter",
+			"KeldranAbilities",
+			"KeldranInventory"
 		});
 	}
 }
