@@ -11,7 +11,8 @@ public class KeldranTests : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"KeldranInventory"
+			"KeldranInventory",
+			"KeldranQuests"
 		});
 	}
 }
