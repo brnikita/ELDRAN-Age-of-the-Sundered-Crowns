@@ -117,6 +117,21 @@ void UKeldranInventoryComponent::ServerRequestUseItem_Implementation(FGuid Insta
 	}
 }
 
+void UKeldranInventoryComponent::AddCoin(int64 Amount)
+{
+	if (Amount <= 0) return;
+	Coin += Amount;
+	OnInventoryChanged.Broadcast();
+}
+
+bool UKeldranInventoryComponent::SpendCoin(int64 Amount)
+{
+	if (Amount <= 0 || Coin < Amount) return false;
+	Coin -= Amount;
+	OnInventoryChanged.Broadcast();
+	return true;
+}
+
 void UKeldranInventoryComponent::OnRep_Items()
 {
 	OnInventoryChanged.Broadcast();
@@ -126,4 +141,5 @@ void UKeldranInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UKeldranInventoryComponent, Items);
+	DOREPLIFETIME(UKeldranInventoryComponent, Coin);
 }

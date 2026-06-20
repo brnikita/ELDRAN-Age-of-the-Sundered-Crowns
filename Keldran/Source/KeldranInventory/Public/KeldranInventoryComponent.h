@@ -51,6 +51,16 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Keldran|Inventory")
 	const TArray<FKeldranInventoryItem>& GetItems() const { return Items; }
 
+	// --- Currency (coin) ---
+	UFUNCTION(BlueprintPure, Category = "Keldran|Inventory")
+	int64 GetCoin() const { return Coin; }
+
+	/** Server: add coin. */
+	void AddCoin(int64 Amount);
+
+	/** Server: spend coin if affordable; returns true on success. */
+	bool SpendCoin(int64 Amount);
+
 	// Client requests (server-validated).
 	UFUNCTION(Server, Reliable) void ServerRequestUseItem(FGuid InstanceId);
 
@@ -59,6 +69,9 @@ public:
 protected:
 	UPROPERTY(ReplicatedUsing = OnRep_Items)
 	TArray<FKeldranInventoryItem> Items;
+
+	UPROPERTY(Replicated)
+	int64 Coin = 0;
 
 	UFUNCTION()
 	void OnRep_Items();
