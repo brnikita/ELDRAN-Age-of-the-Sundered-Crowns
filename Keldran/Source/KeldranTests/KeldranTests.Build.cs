@@ -10,7 +10,8 @@ public class KeldranTests : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
-			"Engine"
+			"Engine",
+			"KeldranInventory"
 		});
 	}
 }
