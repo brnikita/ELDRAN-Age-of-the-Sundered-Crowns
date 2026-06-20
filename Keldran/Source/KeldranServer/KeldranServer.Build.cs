@@ -10,7 +10,12 @@ public class KeldranServer : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
-			"Engine"
+			"Engine",
+			"Json",
+			"KeldranCore",
+			"KeldranNet",
+			"KeldranInventory",
+			"KeldranQuests"
 		});
 	}
 }
