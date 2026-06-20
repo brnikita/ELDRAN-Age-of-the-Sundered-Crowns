@@ -133,11 +133,27 @@
   harness) — both authorable headless. M1 editor DoD (empty client+server connect, PIE) still
   needs the .NET FW SDK + MCP enable.
 
-## NEXT (GPU-free, autonomous)
-- M1-9: complete the gateway client (characters/play/persistence calls) + server-side ticket
-  verify in ApproveLogin; wire SessionSubsystem to ClientTravel.
-- M1-11: KeldranTests automation tests (compile headless; full run needs editor/-nullrhi).
-- Then M1 is **gated on Phase A** (user installs UE 5.8 + plugins + MCP + accounts + API keys).
-  M1-5/M1-6/M1-7 (backend, Docker) and M1-10 (gen pipeline) can begin as soon as API keys +
-  Docker are available, even before the editor is fully set up. M1-1..M1-4, M1-9, M1-11..M1-12
-  need the UE environment verified.
+## 2026-06-20 | M2 gameplay C++ layer | DONE (compile-verified, pushed)
+All authored headless, each compiled (game target) + committed + pushed to origin/main:
+- M2-1 AttributeSet, M2-2 ASC+ability base, M2-3 damage execution, M2-4 Warden abilities.
+- M2-7 inventory, M2-8 equipment, M2-9 loot (seeded), M2-14 vendor+currency.
+- M2-12 quests (kill/collect/reach + rewards).
+- M2-10 mob (own ASC, DT_Mobs, loot-on-death), M2-11 AI (perception/chase/attack/leash).
+- M2-13 dialogue service client, M2-16a gateway persistence (load/save).
+- M2-5a character base, M2-5 player character + PlayerState ASC, M2-18a VaelsRest game mode.
+- tests: NOT RUN yet (running automation tests needs the editor target -> .NET FW SDK).
+
+## REMAINING for M2 slice — EDITOR-GATED (.NET FW SDK + editor; some need GPU)
+- M2-6 nameplates (UMG), M2-15 HUD + windows (UMG), M2-18 L1 map (World Partition+PCG).
+- M2-17 import DataTables (.uasset) — editor (JSON source authorable headless).
+- M2-16b PersistenceSubsystem orchestration (C++ authorable; verify needs runtime).
+- M2-19 FTEST_ functional maps, M2-20 Gauntlet slice — editor + runtime (+GPU to render).
+
+## THE GATE (user, one-time, admin PowerShell) — unblocks the editor target:
+  & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\setup.exe" modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools" --add Microsoft.Net.Component.4.8.SDK --add Microsoft.Net.Component.4.8.TargetingPack --quiet --norestart
+Then: build editor -> run automation tests headless (-nullrhi, no GPU) -> enable Unreal MCP ->
+author widgets/map/data via MCP -> M2-19/20 (GPU for rendered Gauntlet).
+
+## NEXT (headless, still possible before the gate)
+- M2-17 DataTable SOURCE content as JSON (items/abilities/mobs/loot/quests/vendor/npcs).
+- M2-16b PersistenceSubsystem C++.
