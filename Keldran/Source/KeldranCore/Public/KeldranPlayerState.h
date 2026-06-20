@@ -4,15 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
+#include "AbilitySystemInterface.h"
 #include "KeldranPlayerState.generated.h"
 
+class UAbilitySystemComponent;
+
 UCLASS()
-class KELDRANCORE_API AKeldranPlayerState : public APlayerState
+class KELDRANCORE_API AKeldranPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AKeldranPlayerState();
+
+	//~ IAbilitySystemInterface — players own their ASC on the PlayerState so it survives respawn.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
+
+	/** Base ASC created here; the concrete AttributeSet + abilities are added by the player
+	 *  character on possession (KeldranCharacter, which depends on KeldranAbilities). */
+	UPROPERTY(VisibleAnywhere, Category = "Keldran|Abilities")
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Level, BlueprintReadOnly, Category = "Keldran|Progression")
 	int32 CharacterLevel;
