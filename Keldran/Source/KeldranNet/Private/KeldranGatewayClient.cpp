@@ -116,3 +116,37 @@ void UKeldranGatewayClient::VerifyTicket(const FString& Ticket,
 			}
 		});
 }
+
+void UKeldranGatewayClient::LoadCharacter(const FString& CharacterId,
+	TFunction<void(bool, TSharedPtr<FJsonObject>)> OnComplete)
+{
+	const TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
+	Request->SetURL(BaseUrl / TEXT("persistence") / CharacterId);
+	Request->SetVerb(TEXT("GET"));
+	Request->OnProcessRequestComplete().BindLambda(
+		[OnComplete](FHttpRequestPtr Req, FHttpResponsePtr Resp, bool bOk)
+		{
+			if (bOk && Resp.IsValid() && Resp->GetResponseCode() == 200)
+			{
+				TSharedPtr<FJsonObject> Json;
+				const TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Resp->GetContentAsString());
+				if (FJsonSerializer::Deserialize(Reader, Json) && Json.IsValid())
+				{
+					OnComplete(true, Json);
+					return;
+				}
+			}
+			OnComplete(false, nullptr);
+		});
+	Request->ProcessRequest();
+}
+
+void UKeldranGatewayClient::SaveCharacter(const TSharedRef<FJsonObject>& Payload,
+	TFunction<void(bool)> OnComplete)
+{
+	SendJson(TEXT("POST"), TEXT("persistence/save"), Payload, FString(),
+		[OnComplete](bool bNetOk, int32 Code, TSharedPtr<FJsonObject> Json)
+		{
+			OnComplete(bNetOk && Code == 200);
+		});
+}

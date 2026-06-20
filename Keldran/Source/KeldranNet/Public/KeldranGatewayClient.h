@@ -67,6 +67,13 @@ public:
 	void VerifyTicket(const FString& Ticket,
 		TFunction<void(bool bOk, const FString& AccountId, const FString& CharacterId)> OnComplete);
 
+	/** GET /persistence/{id} (server-side). Returns the character snapshot JSON. */
+	void LoadCharacter(const FString& CharacterId,
+		TFunction<void(bool bOk, TSharedPtr<FJsonObject> Snapshot)> OnComplete);
+
+	/** POST /persistence/save (server-side). Payload must match the gateway SaveReq schema. */
+	void SaveCharacter(const TSharedRef<FJsonObject>& Payload, TFunction<void(bool bOk)> OnComplete);
+
 private:
 	/** Generic JSON request. AuthBearer optional. Callback gets (network ok, HTTP code, parsed body). */
 	void SendJson(const FString& Verb, const FString& Path, const TSharedRef<FJsonObject>& Body,
