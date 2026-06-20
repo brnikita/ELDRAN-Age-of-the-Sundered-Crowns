@@ -11,7 +11,11 @@ public class KeldranCharacter : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"EnhancedInput"
+			"EnhancedInput",
+			"GameplayAbilities",
+			"GameplayTags",
+			"KeldranCore",
+			"KeldranAbilities"
 		});
 	}
 }
