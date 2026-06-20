@@ -158,7 +158,9 @@ author widgets/map/data via MCP -> M2-19/20 (GPU for rendered Gauntlet).
 Everything buildable without the Unreal Editor is done, compiled, committed, pushed:
 - Full server/gameplay C++ layer (combat, inventory/equip/loot/vendor, quests, mobs+AI,
   net/session/persistence, player+NPC, dialogue, game mode, component wiring).
-- DataTable SOURCE content JSON (items/mobs/loot/quests/vendors) + gameplay tag registry.
+- All data schema row structs (items/mobs/loot/quests/vendors/abilities/npcs/barks).
+- ALL DataTable SOURCE content JSON (items/mobs/loot/quests/vendors/abilities/npcs/barks) +
+  full gameplay tag registry (Item/Equip/Faction/Damage/Race/Bark).
 - Unit-test suite (compiles, runs once editor target builds): Keldran.Loot.Tables,
   Keldran.Inventory.StackRules, Keldran.Vendor.Pricing, Keldran.Quests.Lifecycle,
   Keldran.Content.Originality, Keldran.Data.Integrity (scaffold), Keldran.Smoke.Basic.
