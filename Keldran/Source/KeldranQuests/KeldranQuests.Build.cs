@@ -11,7 +11,10 @@ public class KeldranQuests : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"GameplayTags"
+			"NetCore",
+			"GameplayTags",
+			"KeldranCore",
+			"KeldranInventory"
 		});
 	}
 }
