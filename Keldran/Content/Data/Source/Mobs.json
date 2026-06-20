@@ -1,0 +1,62 @@
+[
+	{
+		"Name": "mob.brambleback",
+		"DisplayName": "Brambleback",
+		"Level": 2,
+		"bIsElite": false,
+		"Health": 45,
+		"AttackPower": 6,
+		"Armor": 2,
+		"AggroRadius": 700,
+		"LeashRadius": 1800,
+		"MovementSpeed": 380,
+		"LootTable": "loot.brambleback",
+		"XPReward": 12,
+		"Faction": "Faction.Hostile.Wildlife"
+	},
+	{
+		"Name": "mob.mire-skitter",
+		"DisplayName": "Mire Skitter",
+		"Level": 3,
+		"bIsElite": false,
+		"Health": 30,
+		"AttackPower": 5,
+		"Armor": 1,
+		"AggroRadius": 600,
+		"LeashRadius": 1600,
+		"MovementSpeed": 460,
+		"LootTable": "loot.mire-skitter",
+		"XPReward": 14,
+		"Faction": "Faction.Hostile.Wildlife"
+	},
+	{
+		"Name": "mob.hollow-straggler",
+		"DisplayName": "Hollow Straggler",
+		"Level": 4,
+		"bIsElite": false,
+		"Health": 70,
+		"AttackPower": 9,
+		"Armor": 4,
+		"AggroRadius": 900,
+		"LeashRadius": 2200,
+		"MovementSpeed": 400,
+		"LootTable": "loot.hollow-straggler",
+		"XPReward": 22,
+		"Faction": "Faction.Hostile.Hollow"
+	},
+	{
+		"Name": "mob.warden-of-the-toe",
+		"DisplayName": "Warden of the Toe",
+		"Level": 5,
+		"bIsElite": true,
+		"Health": 320,
+		"AttackPower": 14,
+		"Armor": 8,
+		"AggroRadius": 1100,
+		"LeashRadius": 2600,
+		"MovementSpeed": 360,
+		"LootTable": "loot.warden-of-the-toe",
+		"XPReward": 120,
+		"Faction": "Faction.Hostile.Hollow"
+	}
+]

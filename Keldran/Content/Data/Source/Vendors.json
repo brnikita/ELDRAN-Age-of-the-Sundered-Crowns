@@ -1,0 +1,13 @@
+[
+	{
+		"Name": "vendor.mother-wend",
+		"bBuybackEnabled": true,
+		"PriceMultiplierBuy": 1.0,
+		"PriceMultiplierSell": 0.25,
+		"Inventory": [
+			{ "ItemRow": "item.consumable.lesser-restorative", "Stock": -1, "RequiredLevel": 1 },
+			{ "ItemRow": "item.armor.worn-shield", "Stock": 5, "RequiredLevel": 1 },
+			{ "ItemRow": "item.armor.travelers-jerkin", "Stock": 3, "RequiredLevel": 1 }
+		]
+	}
+]

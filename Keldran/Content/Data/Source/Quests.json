@@ -1,0 +1,79 @@
+[
+	{
+		"Name": "quest.boots-on-the-path",
+		"DisplayName": "Boots on the Path",
+		"SummaryText": "Serjant Halek Orne wants you to walk the Thornwood trailhead and get your bearings.",
+		"GiverNPC": "npc.halek-orne",
+		"TurnInNPC": "npc.halek-orne",
+		"Objectives": [
+			{ "Type": "Reach", "TargetId": "marker.thornwood-trailhead", "Count": 1, "Description": "Reach the Thornwood trailhead" }
+		],
+		"PrereqQuests": [],
+		"RewardItems": [ { "ItemRow": "item.consumable.lesser-restorative", "Qty": 3 } ],
+		"RewardCoin": 5,
+		"RewardXP": 20,
+		"MinLevel": 1
+	},
+	{
+		"Name": "quest.thin-the-thorns",
+		"DisplayName": "Thin the Thorns",
+		"SummaryText": "The Bramblebacks have grown bold. Cull six along the Thornwood Path.",
+		"GiverNPC": "npc.halek-orne",
+		"TurnInNPC": "npc.halek-orne",
+		"Objectives": [
+			{ "Type": "Kill", "TargetId": "mob.brambleback", "Count": 6, "Description": "Slay Bramblebacks" }
+		],
+		"PrereqQuests": [ "quest.boots-on-the-path" ],
+		"RewardItems": [ { "ItemRow": "item.weapon.worn-shortsword", "Qty": 1 } ],
+		"RewardCoin": 10,
+		"RewardXP": 45,
+		"MinLevel": 1
+	},
+	{
+		"Name": "quest.salvage-the-skitters",
+		"DisplayName": "Salvage the Skitters",
+		"SummaryText": "Mother Wend needs five Skitter Glands for her remedies.",
+		"GiverNPC": "npc.mother-wend",
+		"TurnInNPC": "npc.mother-wend",
+		"Objectives": [
+			{ "Type": "Collect", "TargetId": "item.reagent.skitter-gland", "Count": 5, "Description": "Collect Skitter Glands" }
+		],
+		"PrereqQuests": [ "quest.boots-on-the-path" ],
+		"RewardItems": [ { "ItemRow": "item.armor.travelers-jerkin", "Qty": 1 } ],
+		"RewardCoin": 15,
+		"RewardXP": 45,
+		"MinLevel": 1
+	},
+	{
+		"Name": "quest.the-hollows-toe",
+		"DisplayName": "The Hollow's Toe",
+		"SummaryText": "Keeper-Initiate Talia Vond asks you to clear four Hollow Stragglers and reach the Rift scar.",
+		"GiverNPC": "npc.talia-vond",
+		"TurnInNPC": "npc.talia-vond",
+		"Objectives": [
+			{ "Type": "Kill", "TargetId": "mob.hollow-straggler", "Count": 4, "Description": "Destroy Hollow Stragglers" },
+			{ "Type": "Reach", "TargetId": "marker.hollows-toe", "Count": 1, "Description": "Reach the Rift scar" }
+		],
+		"PrereqQuests": [ "quest.thin-the-thorns" ],
+		"RewardItems": [ { "ItemRow": "item.trinket.rift-warded-band", "Qty": 1 } ],
+		"RewardCoin": 25,
+		"RewardXP": 80,
+		"MinLevel": 3
+	},
+	{
+		"Name": "quest.warden-of-the-toe",
+		"DisplayName": "Warden of the Toe",
+		"SummaryText": "Defeat the hollowed Warden and recover the Shard Fragment of Vael for Talia Vond.",
+		"GiverNPC": "npc.talia-vond",
+		"TurnInNPC": "npc.talia-vond",
+		"Objectives": [
+			{ "Type": "Kill", "TargetId": "mob.warden-of-the-toe", "Count": 1, "Description": "Defeat the Warden of the Toe" },
+			{ "Type": "Collect", "TargetId": "item.quest.shard-fragment-of-vael", "Count": 1, "Description": "Recover the Shard Fragment of Vael" }
+		],
+		"PrereqQuests": [ "quest.the-hollows-toe" ],
+		"RewardItems": [ { "ItemRow": "item.weapon.vaelsteel-blade", "Qty": 1 } ],
+		"RewardCoin": 60,
+		"RewardXP": 200,
+		"MinLevel": 5
+	}
+]

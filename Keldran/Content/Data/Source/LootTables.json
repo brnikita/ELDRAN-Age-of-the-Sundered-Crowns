@@ -1,0 +1,37 @@
+[
+	{
+		"Name": "loot.brambleback",
+		"Entries": [
+			{ "ItemRow": "item.consumable.lesser-restorative", "DropChance": 0.35, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": false }
+		],
+		"GuaranteedCoinMin": 1,
+		"GuaranteedCoinMax": 4
+	},
+	{
+		"Name": "loot.mire-skitter",
+		"Entries": [
+			{ "ItemRow": "item.reagent.skitter-gland", "DropChance": 1.0, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": true },
+			{ "ItemRow": "item.consumable.lesser-restorative", "DropChance": 0.2, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": false }
+		],
+		"GuaranteedCoinMin": 1,
+		"GuaranteedCoinMax": 3
+	},
+	{
+		"Name": "loot.hollow-straggler",
+		"Entries": [
+			{ "ItemRow": "item.armor.travelers-jerkin", "DropChance": 0.15, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": false },
+			{ "ItemRow": "item.consumable.lesser-restorative", "DropChance": 0.4, "MinQty": 1, "MaxQty": 2, "bIsQuestDrop": false }
+		],
+		"GuaranteedCoinMin": 3,
+		"GuaranteedCoinMax": 8
+	},
+	{
+		"Name": "loot.warden-of-the-toe",
+		"Entries": [
+			{ "ItemRow": "item.quest.shard-fragment-of-vael", "DropChance": 1.0, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": true },
+			{ "ItemRow": "item.weapon.vaelsteel-blade", "DropChance": 1.0, "MinQty": 1, "MaxQty": 1, "bIsQuestDrop": false }
+		],
+		"GuaranteedCoinMin": 25,
+		"GuaranteedCoinMax": 50
+	}
+]
