@@ -1,0 +1,39 @@
+[
+	{
+		"Name": "npc.halek-orne",
+		"DisplayName": "Serjant Halek Orne",
+		"Race": "Race.Freeborn",
+		"Role": "QuestGiver",
+		"Quests": [ "quest.boots-on-the-path", "quest.thin-the-thorns" ],
+		"bIsLivingNPC": false
+	},
+	{
+		"Name": "npc.mother-wend",
+		"DisplayName": "Mother Wend",
+		"Race": "Race.Claykin",
+		"Role": "QuestGiverVendor",
+		"VendorTable": "vendor.mother-wend",
+		"Quests": [ "quest.salvage-the-skitters" ],
+		"bIsLivingNPC": false
+	},
+	{
+		"Name": "npc.talia-vond",
+		"DisplayName": "Keeper-Initiate Talia Vond",
+		"Race": "Race.Aelin",
+		"Role": "QuestGiver",
+		"Quests": [ "quest.the-hollows-toe", "quest.warden-of-the-toe" ],
+		"bIsLivingNPC": false
+	},
+	{
+		"Name": "npc.doran-vale",
+		"DisplayName": "Innkeeper Doran Vale",
+		"Race": "Race.Freeborn",
+		"Role": "Flavor",
+		"bIsLivingNPC": true,
+		"FallbackLines": [
+			"Ale's warm, the bed's clean enough. That's about all I can promise these days.",
+			"Folk say the woods have been restless since the tremor. I say folk talk too much.",
+			"Rest while you can, Shardbearer. The Toe won't clear itself."
+		]
+	}
+]

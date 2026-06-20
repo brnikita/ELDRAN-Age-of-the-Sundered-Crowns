@@ -1,0 +1,27 @@
+[
+	{
+		"Name": "bark.brambleback.aggro",
+		"Context": "Bark.Aggro",
+		"Lines": [ "Thorns bristle!", "A low, wet snarl.", "The bramble lunges." ]
+	},
+	{
+		"Name": "bark.brambleback.death",
+		"Context": "Bark.Death",
+		"Lines": [ "A snapping of dry vines.", "It folds into the underbrush." ]
+	},
+	{
+		"Name": "bark.hollow-straggler.aggro",
+		"Context": "Bark.Aggro",
+		"Lines": [ "...hollow...", "It turns, eyes like quenched coals.", "A voice with nothing behind it." ]
+	},
+	{
+		"Name": "bark.halek-orne.greeting",
+		"Context": "Bark.Greeting",
+		"Lines": [ "Boots on, Shardbearer. The path won't walk itself.", "You'll do. Probably." ]
+	},
+	{
+		"Name": "bark.doran-vale.idle",
+		"Context": "Bark.Idle",
+		"Lines": [ "Wipes a tankard that was already clean.", "Hums an old waystation tune." ]
+	}
+]

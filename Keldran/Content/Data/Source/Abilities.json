@@ -1,0 +1,38 @@
+[
+	{
+		"Name": "ability.warden.basic-attack",
+		"DisplayName": "Strike",
+		"Description": "A measured sword strike at the foe before you.",
+		"AbilityClass": "/Script/KeldranAbilities.GA_BasicAttack",
+		"CostMagnitude": 0,
+		"Cooldown": 0.0,
+		"bTriggersGCD": true,
+		"Range": 200,
+		"InputTag": "Input.Ability.Slot1",
+		"RequiredLevel": 1
+	},
+	{
+		"Name": "ability.warden.shield-bash",
+		"DisplayName": "Shield Bash",
+		"Description": "Slam your shield forward, dealing damage and stunning the target.",
+		"AbilityClass": "/Script/KeldranAbilities.GA_ShieldBash",
+		"CostMagnitude": 15,
+		"Cooldown": 8.0,
+		"bTriggersGCD": true,
+		"Range": 200,
+		"InputTag": "Input.Ability.Slot2",
+		"RequiredLevel": 2
+	},
+	{
+		"Name": "ability.warden.defensive-stance",
+		"DisplayName": "Defensive Stance",
+		"Description": "Brace behind your guard, raising Armor for a time.",
+		"AbilityClass": "/Script/KeldranAbilities.GA_DefensiveStance",
+		"CostMagnitude": 20,
+		"Cooldown": 15.0,
+		"bTriggersGCD": true,
+		"Range": 0,
+		"InputTag": "Input.Ability.Slot3",
+		"RequiredLevel": 3
+	}
+]
