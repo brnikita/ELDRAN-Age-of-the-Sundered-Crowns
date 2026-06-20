@@ -154,6 +154,26 @@ All authored headless, each compiled (game target) + committed + pushed to origi
 Then: build editor -> run automation tests headless (-nullrhi, no GPU) -> enable Unreal MCP ->
 author widgets/map/data via MCP -> M2-19/20 (GPU for rendered Gauntlet).
 
-## NEXT (headless, still possible before the gate)
-- M2-17 DataTable SOURCE content as JSON (items/abilities/mobs/loot/quests/vendor/npcs).
-- M2-16b PersistenceSubsystem C++.
+## 2026-06-20 | HEADLESS TRACK COMPLETE
+Everything buildable without the Unreal Editor is done, compiled, committed, pushed:
+- Full server/gameplay C++ layer (combat, inventory/equip/loot/vendor, quests, mobs+AI,
+  net/session/persistence, player+NPC, dialogue, game mode, component wiring).
+- DataTable SOURCE content JSON (items/mobs/loot/quests/vendors) + gameplay tag registry.
+- Unit-test suite (compiles, runs once editor target builds): Keldran.Loot.Tables,
+  Keldran.Inventory.StackRules, Keldran.Vendor.Pricing, Keldran.Quests.Lifecycle,
+  Keldran.Content.Originality, Keldran.Data.Integrity (scaffold), Keldran.Smoke.Basic.
+
+## HARD BLOCK — all remaining work needs the editor target and/or GPU
+Nothing further can be built or verified headless. Remaining = editor + runtime:
+1. Build editor target — needs **.NET Framework 4.8 SDK** (user admin command, see THE GATE above).
+2. Run the unit/automation suite headless (-nullrhi, no GPU) to VERIFY all the gameplay logic.
+3. Enable Unreal MCP (.mcp.json present) so Claude can author in-editor.
+4. Import DataTables (.uasset), build HUD/nameplate UMG widgets, build L1 Vael's Rest map,
+   place NPCs/mobs/markers, wire icons/audio (M3 gen).
+5. M2-19 functional FTEST_ maps + M2-20 Gauntlet slice — need editor + **GPU** to render.
+
+## RESUME HERE (when the user returns)
+- Run THE GATE command (admin) -> tell Claude "done" -> Claude builds editor + runs the test
+  suite to verify the whole gameplay layer (GPU-free).
+- Order RAM (32GB) + GPU (RTX 3060 12GB) for the editor/playtest/Gauntlet phase.
+- Until then: NOTHING to build headless. Do not fabricate work.
