@@ -31,6 +31,9 @@ public:
 	/** Server: turn in a Complete quest, granting item/coin/XP rewards. */
 	bool TurnInQuest(FName QuestRow);
 
+	/** Server: restore a quest's exact status + objective progress (used by persistence load). */
+	void RestoreQuest(FName QuestRow, EQuestStatus Status, const TArray<int32>& Progress);
+
 	// Server event hooks (called by combat / inventory / area triggers).
 	void NotifyKill(FName MobRow);
 	void NotifyCollect(FName ItemRow, int32 Amount);

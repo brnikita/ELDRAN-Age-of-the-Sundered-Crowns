@@ -141,6 +141,25 @@ void UKeldranQuestComponent::GrantRewards(const FQuestRow& Row)
 	// Coin credited to currency in M2-16 persistence.
 }
 
+void UKeldranQuestComponent::RestoreQuest(FName QuestRow, EQuestStatus Status, const TArray<int32>& Progress)
+{
+	if (QuestRow.IsNone())
+	{
+		return;
+	}
+	FQuestProgress* Existing = FindQuest(QuestRow);
+	if (!Existing)
+	{
+		FQuestProgress P;
+		P.QuestRow = QuestRow;
+		ActiveQuests.Add(P);
+		Existing = &ActiveQuests.Last();
+	}
+	Existing->Status = Status;
+	Existing->ObjectiveProgress = Progress;
+	OnQuestsUpdated.Broadcast();
+}
+
 void UKeldranQuestComponent::OnRep_Quests()
 {
 	OnQuestsUpdated.Broadcast();
