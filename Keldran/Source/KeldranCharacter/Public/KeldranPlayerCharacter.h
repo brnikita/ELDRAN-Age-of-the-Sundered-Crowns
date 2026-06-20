@@ -37,6 +37,11 @@ protected:
 	UPROPERTY(VisibleAnywhere) TObjectPtr<USpringArmComponent> SpringArm;
 	UPROPERTY(VisibleAnywhere) TObjectPtr<UCameraComponent> Camera;
 
+	// Per-player gameplay components (server-authoritative state).
+	UPROPERTY(VisibleAnywhere) TObjectPtr<class UKeldranInventoryComponent> Inventory;
+	UPROPERTY(VisibleAnywhere) TObjectPtr<class UKeldranEquipmentComponent> Equipment;
+	UPROPERTY(VisibleAnywhere) TObjectPtr<class UKeldranQuestComponent> Quests;
+
 	bool bAbilitiesInitialized = false;
 
 	void InitAbilityActorInfoFromPlayerState();

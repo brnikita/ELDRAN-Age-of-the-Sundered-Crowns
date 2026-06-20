@@ -7,6 +7,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KeldranInventoryComponent.h"
+#include "KeldranEquipmentComponent.h"
+#include "KeldranQuestComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -26,6 +29,10 @@ AKeldranPlayerCharacter::AKeldranPlayerCharacter()
 	{
 		Move->bOrientRotationToMovement = true;
 	}
+
+	Inventory = CreateDefaultSubobject<UKeldranInventoryComponent>(TEXT("Inventory"));
+	Equipment = CreateDefaultSubobject<UKeldranEquipmentComponent>(TEXT("Equipment"));
+	Quests = CreateDefaultSubobject<UKeldranQuestComponent>(TEXT("Quests"));
 }
 
 void AKeldranPlayerCharacter::PossessedBy(AController* NewController)

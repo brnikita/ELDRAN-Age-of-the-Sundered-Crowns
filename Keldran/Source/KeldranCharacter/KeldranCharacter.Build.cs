@@ -15,7 +15,9 @@ public class KeldranCharacter : ModuleRules
 			"GameplayAbilities",
 			"GameplayTags",
 			"KeldranCore",
-			"KeldranAbilities"
+			"KeldranAbilities",
+			"KeldranInventory",
+			"KeldranQuests"
 		});
 	}
 }
