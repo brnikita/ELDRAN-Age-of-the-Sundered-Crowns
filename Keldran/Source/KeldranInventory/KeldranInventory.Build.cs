@@ -11,7 +11,10 @@ public class KeldranInventory : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"GameplayTags"
+			"NetCore",
+			"GameplayTags",
+			"GameplayAbilities",
+			"KeldranCore"
 		});
 	}
 }
