@@ -14,7 +14,8 @@ public class KeldranQuests : ModuleRules
 			"NetCore",
 			"GameplayTags",
 			"KeldranCore",
-			"KeldranInventory"
+			"KeldranInventory",
+			"KeldranNet"
 		});
 	}
 }
