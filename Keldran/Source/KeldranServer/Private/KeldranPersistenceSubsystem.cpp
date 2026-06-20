@@ -99,6 +99,7 @@ TSharedRef<FJsonObject> UKeldranPersistenceSubsystem::BuildSnapshot(APlayerContr
 		{
 			TSharedRef<FJsonObject> O = MakeShared<FJsonObject>();
 			O->SetStringField(TEXT("slot"), E.Slot.ToString());
+			O->SetStringField(TEXT("item_row"), E.ItemRow.ToString());
 			O->SetStringField(TEXT("instance_id"), E.InstanceId.ToString(EGuidFormats::DigitsWithHyphens));
 			EquipArr.Add(MakeShared<FJsonValueObject>(O));
 		}
@@ -199,12 +200,36 @@ void UKeldranPersistenceSubsystem::LoadCharacter(APlayerController* PC, const FS
 					if (O.IsValid())
 					{
 						FGuid Id; FGuid::Parse(O->GetStringField(TEXT("instance_id")), Id);
-						// EquipItem resolves the slot from the item row; instance carried through.
+						Equip->EquipItem(FName(*O->GetStringField(TEXT("item_row"))), Id);
 					}
 				}
 			}
 		}
-		// Quest progress full-fidelity restore needs a QuestComponent restore method (follow-up).
-		UE_LOG(LogTemp, Log, TEXT("[Keldran] LoadCharacter applied snapshot."));
+		// Quests: restore exact status + objective progress.
+		if (UKeldranQuestComponent* Q = FindOnPlayer<UKeldranQuestComponent>(PC2))
+		{
+			const TArray<TSharedPtr<FJsonValue>>* QArr;
+			if (Snap->TryGetArrayField(TEXT("quests"), QArr))
+			{
+				for (const TSharedPtr<FJsonValue>& V : *QArr)
+				{
+					const TSharedPtr<FJsonObject> O = V->AsObject();
+					if (!O.IsValid()) { continue; }
+					const FString StatusStr = O->GetStringField(TEXT("status"));
+					EQuestStatus Status = EQuestStatus::Active;
+					if (StatusStr == TEXT("complete"))  { Status = EQuestStatus::Complete; }
+					else if (StatusStr == TEXT("turned_in")) { Status = EQuestStatus::TurnedIn; }
+
+					TArray<int32> Progress;
+					const TArray<TSharedPtr<FJsonValue>>* ObjArr;
+					if (O->TryGetArrayField(TEXT("objectives"), ObjArr))
+					{
+						for (const TSharedPtr<FJsonValue>& N : *ObjArr) { Progress.Add(static_cast<int32>(N->AsNumber())); }
+					}
+					Q->RestoreQuest(FName(*O->GetStringField(TEXT("quest_row"))), Status, Progress);
+				}
+			}
+		}
+		UE_LOG(LogTemp, Log, TEXT("[Keldran] LoadCharacter applied snapshot (inv/equip/quests/coin/pos)."));
 	});
 }
