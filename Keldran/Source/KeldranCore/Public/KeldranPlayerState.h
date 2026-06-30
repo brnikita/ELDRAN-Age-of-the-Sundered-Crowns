@@ -25,6 +25,10 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Keldran|Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
+	/** Backend character id (from the play ticket / join URL); used for persistence load/save. */
+	UPROPERTY(BlueprintReadOnly, Category = "Keldran|Progression")
+	FString CharacterId;
+
 	UPROPERTY(ReplicatedUsing = OnRep_Level, BlueprintReadOnly, Category = "Keldran|Progression")
 	int32 CharacterLevel;
 
