@@ -41,3 +41,13 @@ Thumbs.db
 
 # Transient build logs
 build_*.log
+
+# Transient run logs
+srv*.log
+cli*.log
+*.out
+server_load.log
+test_*.log
+import_dt.log
+build_*.log
+verify_map.log
