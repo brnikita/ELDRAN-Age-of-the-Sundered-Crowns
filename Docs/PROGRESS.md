@@ -201,8 +201,16 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
   +inv/quests) on join, SaveCharacter->ok on logout, through gateway + Postgres.
 - Data integrity + originality: green. Full suite 8/8.
 
-## REMAINING (formal packaging + M3 visuals)
-- One unified **UGauntletTestController** packaging the above into a single automated networked
-  run on a cooked build (substance all proven; this is the formal M2-20 artifact).
-- M3 visuals: MetaHuman+Mixamo character, Quixel L1 environment, UMG HUD/nameplates, generated
-  icons/audio wired (gen pipeline built+verified; placeholders in use). Needs Epic/Adobe + editor.
+## 2026-06-30 | M3 content underway
+- **Icons**: 13 generated (GPT Image 2) -> imported to UTexture2D (/Game/UI/Icons/**) -> wired
+  into DT_Items (8) + DT_Abilities (3). Suite still 8/8 green.
+- **Audio**: 7 generated (ElevenLabs) — 3 ability SFX + 4 VO/barks. (USoundWave import +
+  MetaSounds wiring = remaining editor step.)
+- Note: gen pipeline writes to <repo>/Content; import_textures.py bridges into the UE project.
+
+## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
+- MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
+  USoundWave/MetaSounds audio wiring, more generated icons/text.
+- One unified **UGauntletTestController** packaging the verified DoD assertions into a single
+  automated cooked-build run.
+- M4–M7 per spec §14 (social/progression, dungeons/worlds, endgame, hardening).
