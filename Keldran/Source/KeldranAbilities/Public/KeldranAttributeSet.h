@@ -26,6 +26,9 @@ class KELDRANABILITIES_API UKeldranAttributeSet : public UAttributeSet
 public:
 	UKeldranAttributeSet();
 
+	/** Fires on the server when Health reaches 0 after a GameplayEffect (reliable death signal). */
+	FSimpleMulticastDelegate OnOutOfHealth;
+
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

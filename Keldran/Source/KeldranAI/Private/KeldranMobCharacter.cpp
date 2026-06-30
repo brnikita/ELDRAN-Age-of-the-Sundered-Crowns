@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "AbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
+#include "KeldranGameplayTags.h"
 
 AKeldranMobCharacter::AKeldranMobCharacter()
 {
@@ -30,11 +31,15 @@ void AKeldranMobCharacter::BeginPlay()
 	}
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 
-	if (HasAuthority())
+	// Server (dedicated or standalone) initializes stats + death binding; not on net clients.
+	if (GetNetMode() != NM_Client)
 	{
 		InitFromRow();
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			UKeldranAttributeSet::GetHealthAttribute()).AddUObject(this, &AKeldranMobCharacter::OnHealthAttrChanged);
+		// Reliable death signal: the AttributeSet broadcasts OnOutOfHealth at 0 HP.
+		if (UKeldranAttributeSet* Set = Cast<UKeldranAttributeSet>(AttributeSet))
+		{
+			Set->OnOutOfHealth.AddUObject(this, &AKeldranMobCharacter::HandleDeath);
+		}
 	}
 }
 
@@ -77,9 +82,9 @@ void AKeldranMobCharacter::InitFromRow()
 	CachedXPReward = Row->XPReward;
 }
 
-void AKeldranMobCharacter::OnHealthAttrChanged(const FOnAttributeChangeData& Data)
+void AKeldranMobCharacter::OnDeadTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
-	if (Data.NewValue <= 0.f)
+	if (NewCount > 0)
 	{
 		HandleDeath();
 	}
@@ -87,7 +92,7 @@ void AKeldranMobCharacter::OnHealthAttrChanged(const FOnAttributeChangeData& Dat
 
 void AKeldranMobCharacter::HandleDeath()
 {
-	if (bDeathHandled || !HasAuthority())
+	if (bDeathHandled || GetNetMode() == NM_Client)
 	{
 		return;
 	}
@@ -95,7 +100,8 @@ void AKeldranMobCharacter::HandleDeath()
 
 	if (LootTableAsset && !CachedLootTable.IsNone())
 	{
-		if (const FLootTableRow* LT = LootTableAsset->FindRow<FLootTableRow>(CachedLootTable, TEXT("Death"), false))
+		const FLootTableRow* LT = LootTableAsset->FindRow<FLootTableRow>(CachedLootTable, TEXT("Death"), false);
+		if (LT)
 		{
 			FRandomStream Rng(FMath::Rand());
 			const FLootResult Loot = FKeldranLootService::RollLoot(*LT, Rng, /*bIncludeQuestDrops=*/true);

@@ -57,6 +57,7 @@ void UKeldranAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 			{
 				ASC->AddLooseGameplayTag(Tag_State_Dead);
 			}
+			OnOutOfHealth.Broadcast();
 		}
 	}
 }

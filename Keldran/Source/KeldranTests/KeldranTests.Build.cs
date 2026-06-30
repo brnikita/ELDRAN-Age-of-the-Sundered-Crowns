@@ -11,8 +11,13 @@ public class KeldranTests : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"GameplayAbilities",
+			"GameplayTags",
 			"KeldranInventory",
-			"KeldranQuests"
+			"KeldranQuests",
+			"KeldranAbilities",
+			"KeldranAI",
+			"KeldranCharacter"
 		});
 	}
 }

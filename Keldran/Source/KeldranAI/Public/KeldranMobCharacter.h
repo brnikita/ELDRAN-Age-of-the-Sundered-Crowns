@@ -33,7 +33,7 @@ protected:
 	void InitFromRow();
 	void HandleDeath();
 
-	void OnHealthAttrChanged(const struct FOnAttributeChangeData& Data);
+	void OnDeadTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
 
 	FName CachedLootTable;
 	int32 CachedXPReward = 0;
