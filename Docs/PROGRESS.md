@@ -174,8 +174,24 @@ Nothing further can be built or verified headless. Remaining = editor + runtime:
    place NPCs/mobs/markers, wire icons/audio (M3 gen).
 5. M2-19 functional FTEST_ maps + M2-20 Gauntlet slice — need editor + **GPU** to render.
 
-## RESUME HERE (when the user returns)
-- Run THE GATE command (admin) -> tell Claude "done" -> Claude builds editor + runs the test
-  suite to verify the whole gameplay layer (GPU-free).
-- Order RAM (32GB) + GPU (RTX 3060 12GB) for the editor/playtest/Gauntlet phase.
-- Until then: NOTHING to build headless. Do not fabricate work.
+## 2026-06-30 | GATE CLEARED + M2 SLICE VERIFIED (GPU + .NET SDK installed)
+User installed RTX 3060 + .NET 4.8 SDK. Editor target builds. Verified end-to-end:
+- **Editor target builds** (KeldranEditor, all module DLLs).
+- **Automation suite 8/8 GREEN** headless (-nullrhi): Loot.Tables, Inventory.StackRules,
+  Vendor.Pricing, Quests.Lifecycle, Content.Originality, Data.Integrity, Smoke.Basic,
+  Functional.CombatIntegration (live world: mob from DT_Mobs + ASC + damage GE -> death;
+  player spawns w/ components).
+- **DataTables imported** to /Game/Data/DT_* (8) via Python commandlet.
+- **Playable L1 map** built headless + set as default/server map.
+- **Dedicated server runs the slice** (loads L1, VaelsRestGameMode, listens :7777).
+- **Multiplayer verified**: 2 clients join (ticket-gated ApproveLogin), each gets a possessed
+  player pawn w/ GAS ASC + 3 Warden abilities.
+- fixes: AttributeSet OnOutOfHealth death delegate; mob gated on GetNetMode()!=NM_Client;
+  player StartingAbilities = Warden kit.
+
+## REMAINING toward full M2 DoD + M3
+- One automated **Gauntlet** (UGauntletTestController) asserting the whole loop in a single run
+  incl. **relog persistence** (needs cooked build + controller + server persistence wiring:
+  ticket->character_id->PostLogin load/Logout save). Components verified individually.
+- M3 visuals: MetaHuman+Mixamo char, Quixel L1, UMG HUD/nameplates, generated icons/audio wired
+  (gen pipeline built+verified; placeholders in use now).
