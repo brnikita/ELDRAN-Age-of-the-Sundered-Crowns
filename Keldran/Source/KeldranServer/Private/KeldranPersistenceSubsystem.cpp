@@ -160,6 +160,8 @@ void UKeldranPersistenceSubsystem::LoadCharacter(APlayerController* PC, const FS
 		{
 			PS->CharacterLevel = static_cast<int32>(Snap->GetNumberField(TEXT("level")));
 			PS->XP = static_cast<int64>(Snap->GetNumberField(TEXT("xp")));
+			UE_LOG(LogTemp, Warning, TEXT("[Keldran] LoadCharacter: level=%d xp=%lld coin=%d"),
+				PS->CharacterLevel, (long long)PS->XP, (int)Snap->GetNumberField(TEXT("coin")));
 		}
 		// Position
 		const TArray<TSharedPtr<FJsonValue>>* PosArr;
