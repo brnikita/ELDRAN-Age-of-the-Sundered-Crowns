@@ -3,6 +3,7 @@
 #include "KeldranPlayerState.h"
 #include "KeldranAttributeSet.h"
 #include "KeldranGameplayAbility.h"
+#include "KeldranWardenAbilities.h"
 #include "AbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -33,6 +34,11 @@ AKeldranPlayerCharacter::AKeldranPlayerCharacter()
 	Inventory = CreateDefaultSubobject<UKeldranInventoryComponent>(TEXT("Inventory"));
 	Equipment = CreateDefaultSubobject<UKeldranEquipmentComponent>(TEXT("Equipment"));
 	Quests = CreateDefaultSubobject<UKeldranQuestComponent>(TEXT("Quests"));
+
+	// Slice Warden kit, granted on possession (designers can override in a BP child / data).
+	StartingAbilities.Add(UGA_BasicAttack::StaticClass());
+	StartingAbilities.Add(UGA_ShieldBash::StaticClass());
+	StartingAbilities.Add(UGA_DefensiveStance::StaticClass());
 }
 
 void AKeldranPlayerCharacter::PossessedBy(AController* NewController)
@@ -70,13 +76,16 @@ void AKeldranPlayerCharacter::InitAbilityActorInfoFromPlayerState()
 		ASC->AddSpawnedAttribute(Set);
 		AttributeSet = Set;
 
+		int32 Granted = 0;
 		for (const TSubclassOf<UKeldranGameplayAbility>& Ability : StartingAbilities)
 		{
 			if (Ability)
 			{
 				ASC->GiveAbility(FGameplayAbilitySpec(Ability, 1));
+				++Granted;
 			}
 		}
+		UE_LOG(LogTemp, Warning, TEXT("[Keldran] Player pawn possessed + ASC init on server (abilities granted: %d)"), Granted);
 	}
 }
 
