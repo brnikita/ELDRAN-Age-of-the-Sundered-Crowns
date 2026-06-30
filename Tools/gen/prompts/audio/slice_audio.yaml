@@ -1,0 +1,34 @@
+# Slice audio (ElevenLabs): ability SFX + creature barks + NPC VO. mp3 -> Content/Audio/**.
+version: "1"
+items:
+  # --- Ability SFX ---
+  - id: sfx.ability.basic-attack
+    kind: sfx
+    out: Content/Audio/SFX/basic_attack.mp3
+    prompt: A quick sharp sword swing whoosh through air, short, punchy.
+  - id: sfx.ability.shield-bash
+    kind: sfx
+    out: Content/Audio/SFX/shield_bash.mp3
+    prompt: A heavy metal shield slam impact with a metallic clang, short.
+  - id: sfx.ability.defensive-stance
+    kind: sfx
+    out: Content/Audio/SFX/defensive_stance.mp3
+    prompt: A low resonant magical ward activating, protective shimmer, short.
+  # --- Creature barks (VO via TTS for a guttural read) ---
+  - id: vo.brambleback.aggro
+    kind: tts
+    out: Content/Audio/VO/brambleback_aggro.mp3
+    text: A low, wet snarl rising to a thorny shriek.
+  - id: vo.hollow-straggler.aggro
+    kind: tts
+    out: Content/Audio/VO/hollow_straggler_aggro.mp3
+    text: Hollow... hollow... come closer.
+  # --- NPC VO ---
+  - id: vo.halek-orne.greeting
+    kind: tts
+    out: Content/Audio/VO/halek_orne_greeting.mp3
+    text: Boots on, Shardbearer. The path won't walk itself.
+  - id: vo.talia-vond.greeting
+    kind: tts
+    out: Content/Audio/VO/talia_vond_greeting.mp3
+    text: The Rift's edge is no place for the careless. Tread well.
