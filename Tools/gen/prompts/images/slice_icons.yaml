@@ -1,0 +1,57 @@
+# Slice ability + item + status icons (GPT Image 2, 2D only). Shared style for coherence.
+version: "1"
+style_preamble: >
+  Game UI icon, painterly realistic high-fantasy, centered subject on a dark neutral background
+  with soft rim light, weathered medieval-fantasy aesthetic, cohesive icon set, no text, no border.
+items:
+  # --- Warden abilities ---
+  - id: icon.ability.basic-attack
+    out: Content/UI/Icons/Abilities/basic_attack.png
+    size: "1024x1024"
+    prompt: A worn steel shortsword mid-swing with a faint motion arc.
+  - id: icon.ability.defensive-stance
+    out: Content/UI/Icons/Abilities/defensive_stance.png
+    size: "1024x1024"
+    prompt: A raised iron-banded round shield glowing with a protective ward, braced stance.
+  # --- Items ---
+  - id: icon.item.worn-shortsword
+    out: Content/UI/Icons/Items/worn_shortsword.png
+    size: "1024x1024"
+    prompt: A nicked, well-used frontier shortsword laid at a slight angle.
+  - id: icon.item.worn-shield
+    out: Content/UI/Icons/Items/worn_shield.png
+    size: "1024x1024"
+    prompt: A scarred iron-banded wooden roundshield.
+  - id: icon.item.travelers-jerkin
+    out: Content/UI/Icons/Items/travelers_jerkin.png
+    size: "1024x1024"
+    prompt: A boiled-leather traveler's jerkin, folded, frontier craftsmanship.
+  - id: icon.item.lesser-restorative
+    out: Content/UI/Icons/Items/lesser_restorative.png
+    size: "1024x1024"
+    prompt: A small glass vial of faintly glowing amber restorative draught, cork stopper.
+  - id: icon.item.skitter-gland
+    out: Content/UI/Icons/Items/skitter_gland.png
+    size: "1024x1024"
+    prompt: A small translucent luminous gland reagent on a dark surface.
+  - id: icon.item.shard-fragment
+    out: Content/UI/Icons/Items/shard_fragment_of_vael.png
+    size: "1024x1024"
+    prompt: A jagged crystalline shard of a broken crown, humming with pale inner light.
+  - id: icon.item.rift-warded-band
+    out: Content/UI/Icons/Items/rift_warded_band.png
+    size: "1024x1024"
+    prompt: An ornate silver ring set with a small blue rift-warding stone.
+  - id: icon.item.vaelsteel-blade
+    out: Content/UI/Icons/Items/vaelsteel_blade.png
+    size: "1024x1024"
+    prompt: A finely reforged sword with a faint shard-light sheen along the fuller, blue accents.
+  # --- Status ---
+  - id: icon.status.stunned
+    out: Content/UI/Icons/Status/stunned.png
+    size: "1024x1024"
+    prompt: A stylized swirl of stars circling, dazed/stunned status symbol.
+  - id: icon.status.defensive-buff
+    out: Content/UI/Icons/Status/defensive_buff.png
+    size: "1024x1024"
+    prompt: A glowing blue shield-ward emblem, defensive buff status symbol.

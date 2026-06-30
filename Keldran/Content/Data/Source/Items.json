@@ -1,90 +1,98 @@
 [
-	{
-		"Name": "item.weapon.worn-shortsword",
-		"DisplayName": "Worn Shortsword",
-		"Description": "A nicked frontier blade. It has seen better seasons.",
-		"ItemType": "Item.Type.Weapon",
-		"EquipSlot": "Equip.Slot.MainHand",
-		"Rarity": "Common",
-		"MaxStack": 1,
-		"VendorValue": 8,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.armor.worn-shield",
-		"DisplayName": "Worn Roundshield",
-		"Description": "Iron-banded wood, scarred from old skirmishes.",
-		"ItemType": "Item.Type.Armor",
-		"EquipSlot": "Equip.Slot.OffHand",
-		"Rarity": "Common",
-		"MaxStack": 1,
-		"VendorValue": 6,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.armor.travelers-jerkin",
-		"DisplayName": "Traveler's Jerkin",
-		"Description": "Boiled leather, light and quiet on the path.",
-		"ItemType": "Item.Type.Armor",
-		"EquipSlot": "Equip.Slot.Chest",
-		"Rarity": "Common",
-		"MaxStack": 1,
-		"VendorValue": 10,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.consumable.lesser-restorative",
-		"DisplayName": "Lesser Restorative",
-		"Description": "A bitter draught that knits small wounds.",
-		"ItemType": "Item.Type.Consumable",
-		"EquipSlot": "Equip.Slot.None",
-		"Rarity": "Common",
-		"MaxStack": 20,
-		"VendorValue": 3,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.reagent.skitter-gland",
-		"DisplayName": "Skitter Gland",
-		"Description": "A faintly luminous gland prized by herbalists.",
-		"ItemType": "Item.Type.Reagent",
-		"EquipSlot": "Equip.Slot.None",
-		"Rarity": "Common",
-		"MaxStack": 50,
-		"VendorValue": 2,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.quest.shard-fragment-of-vael",
-		"DisplayName": "Shard Fragment of Vael",
-		"Description": "A jagged sliver of a broken Crown. It hums against your palm and does not hollow you.",
-		"ItemType": "Item.Type.Quest",
-		"EquipSlot": "Equip.Slot.None",
-		"Rarity": "Rare",
-		"MaxStack": 1,
-		"VendorValue": 0,
-		"RequiredLevel": 1
-	},
-	{
-		"Name": "item.trinket.rift-warded-band",
-		"DisplayName": "Rift-Warded Band",
-		"Description": "A Covenant ring that steadies the wearer near a Rift.",
-		"ItemType": "Item.Type.Trinket",
-		"EquipSlot": "Equip.Slot.Trinket",
-		"Rarity": "Rare",
-		"MaxStack": 1,
-		"VendorValue": 40,
-		"RequiredLevel": 4
-	},
-	{
-		"Name": "item.weapon.vaelsteel-blade",
-		"DisplayName": "Vaelsteel Blade",
-		"Description": "Reforged from waystation steel and a touch of Shard-light.",
-		"ItemType": "Item.Type.Weapon",
-		"EquipSlot": "Equip.Slot.MainHand",
-		"Rarity": "Rare",
-		"MaxStack": 1,
-		"VendorValue": 55,
-		"RequiredLevel": 5
-	}
+  {
+    "Name": "item.weapon.worn-shortsword",
+    "DisplayName": "Worn Shortsword",
+    "Description": "A nicked frontier blade. It has seen better seasons.",
+    "ItemType": "Item.Type.Weapon",
+    "EquipSlot": "Equip.Slot.MainHand",
+    "Rarity": "Common",
+    "MaxStack": 1,
+    "VendorValue": 8,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/worn_shortsword.worn_shortsword"
+  },
+  {
+    "Name": "item.armor.worn-shield",
+    "DisplayName": "Worn Roundshield",
+    "Description": "Iron-banded wood, scarred from old skirmishes.",
+    "ItemType": "Item.Type.Armor",
+    "EquipSlot": "Equip.Slot.OffHand",
+    "Rarity": "Common",
+    "MaxStack": 1,
+    "VendorValue": 6,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/worn_shield.worn_shield"
+  },
+  {
+    "Name": "item.armor.travelers-jerkin",
+    "DisplayName": "Traveler's Jerkin",
+    "Description": "Boiled leather, light and quiet on the path.",
+    "ItemType": "Item.Type.Armor",
+    "EquipSlot": "Equip.Slot.Chest",
+    "Rarity": "Common",
+    "MaxStack": 1,
+    "VendorValue": 10,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/travelers_jerkin.travelers_jerkin"
+  },
+  {
+    "Name": "item.consumable.lesser-restorative",
+    "DisplayName": "Lesser Restorative",
+    "Description": "A bitter draught that knits small wounds.",
+    "ItemType": "Item.Type.Consumable",
+    "EquipSlot": "Equip.Slot.None",
+    "Rarity": "Common",
+    "MaxStack": 20,
+    "VendorValue": 3,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/lesser_restorative.lesser_restorative"
+  },
+  {
+    "Name": "item.reagent.skitter-gland",
+    "DisplayName": "Skitter Gland",
+    "Description": "A faintly luminous gland prized by herbalists.",
+    "ItemType": "Item.Type.Reagent",
+    "EquipSlot": "Equip.Slot.None",
+    "Rarity": "Common",
+    "MaxStack": 50,
+    "VendorValue": 2,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/skitter_gland.skitter_gland"
+  },
+  {
+    "Name": "item.quest.shard-fragment-of-vael",
+    "DisplayName": "Shard Fragment of Vael",
+    "Description": "A jagged sliver of a broken Crown. It hums against your palm and does not hollow you.",
+    "ItemType": "Item.Type.Quest",
+    "EquipSlot": "Equip.Slot.None",
+    "Rarity": "Rare",
+    "MaxStack": 1,
+    "VendorValue": 0,
+    "RequiredLevel": 1,
+    "Icon": "/Game/UI/Icons/Items/shard_fragment_of_vael.shard_fragment_of_vael"
+  },
+  {
+    "Name": "item.trinket.rift-warded-band",
+    "DisplayName": "Rift-Warded Band",
+    "Description": "A Covenant ring that steadies the wearer near a Rift.",
+    "ItemType": "Item.Type.Trinket",
+    "EquipSlot": "Equip.Slot.Trinket",
+    "Rarity": "Rare",
+    "MaxStack": 1,
+    "VendorValue": 40,
+    "RequiredLevel": 4,
+    "Icon": "/Game/UI/Icons/Items/rift_warded_band.rift_warded_band"
+  },
+  {
+    "Name": "item.weapon.vaelsteel-blade",
+    "DisplayName": "Vaelsteel Blade",
+    "Description": "Reforged from waystation steel and a touch of Shard-light.",
+    "ItemType": "Item.Type.Weapon",
+    "EquipSlot": "Equip.Slot.MainHand",
+    "Rarity": "Rare",
+    "MaxStack": 1,
+    "VendorValue": 55,
+    "RequiredLevel": 5,
+    "Icon": "/Game/UI/Icons/Items/vaelsteel_blade.vaelsteel_blade"
+  }
 ]
