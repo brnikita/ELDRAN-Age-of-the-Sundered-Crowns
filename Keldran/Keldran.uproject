@@ -1,27 +1,97 @@
 {
-	"FileVersion": 3,
-	"EngineAssociation": "5.8",
-	"Category": "",
-	"Description": "KELDRAN: Age of the Sundered Crowns — open-world PvE MMORPG.",
-	"Modules": [
-		{ "Name": "Keldran", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranCore", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranCharacter", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranAbilities", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranInventory", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranQuests", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranAI", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranNet", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranUI", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranServer", "Type": "Runtime", "LoadingPhase": "Default" },
-		{ "Name": "KeldranTests", "Type": "Runtime", "LoadingPhase": "Default" }
-	],
-	"Plugins": [
-		{ "Name": "EnhancedInput", "Enabled": true },
-		{ "Name": "GameplayAbilities", "Enabled": true },
-		{ "Name": "ModelingToolsEditorMode", "Enabled": true },
-		{ "Name": "PythonScriptPlugin", "Enabled": true },
-		{ "Name": "EditorScriptingUtilities", "Enabled": true },
-		{ "Name": "RemoteControl", "Enabled": true }
-	]
+  "FileVersion": 3,
+  "EngineAssociation": "{25F24211-458C-D118-7E3D-3A9E405D69CB}",
+  "Category": "",
+  "Description": "KELDRAN: Age of the Sundered Crowns - open-world PvE MMORPG.",
+  "Modules": [
+    {
+      "Name": "Keldran",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranCore",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranCharacter",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranAbilities",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranInventory",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranQuests",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranAI",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranNet",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranUI",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranServer",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "KeldranTests",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "EnhancedInput",
+      "Enabled": true
+    },
+    {
+      "Name": "GameplayAbilities",
+      "Enabled": true
+    },
+    {
+      "Name": "ModelingToolsEditorMode",
+      "Enabled": true
+    },
+    {
+      "Name": "PythonScriptPlugin",
+      "Enabled": true
+    },
+    {
+      "Name": "EditorScriptingUtilities",
+      "Enabled": true
+    },
+    {
+      "Name": "RemoteControl",
+      "Enabled": true
+    },
+    {
+      "Name": "ModelContextProtocol",
+      "Enabled": true
+    },
+    {
+      "Name": "ToolsetRegistry",
+      "Enabled": true
+    }
+  ]
 }
