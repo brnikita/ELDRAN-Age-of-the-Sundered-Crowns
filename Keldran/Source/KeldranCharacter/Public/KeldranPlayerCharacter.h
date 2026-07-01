@@ -28,10 +28,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Abilities")
 	TArray<TSubclassOf<UKeldranGameplayAbility>> StartingAbilities;
 
-	// Enhanced Input (assigned in editor/data).
-	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TObjectPtr<UInputMappingContext> InputMapping;
-	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TObjectPtr<UInputAction> MoveAction;
-	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TObjectPtr<UInputAction> LookAction;
+	// Enhanced Input. Defaults point at the generated /Game/Input assets (created by
+	// Tools/gen/build_input_assets.py); overridable in a BP child or data.
+	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TSoftObjectPtr<UInputMappingContext> InputMapping;
+	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TSoftObjectPtr<UInputAction> MoveAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TSoftObjectPtr<UInputAction> LookAction;
+	/** Slot1..Slot3 ability activation actions (keys 1/2/3), mapped to Input.Ability.SlotN. */
+	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Input") TArray<TSoftObjectPtr<UInputAction>> AbilityActions;
 
 protected:
 	UPROPERTY(VisibleAnywhere) TObjectPtr<USpringArmComponent> SpringArm;
@@ -48,4 +51,8 @@ protected:
 
 	void Move(const struct FInputActionValue& Value);
 	void Look(const struct FInputActionValue& Value);
+	void ActivateAbilitySlot(int32 SlotIndex);
+	void OnAbility1() { ActivateAbilitySlot(0); }
+	void OnAbility2() { ActivateAbilitySlot(1); }
+	void OnAbility3() { ActivateAbilitySlot(2); }
 };

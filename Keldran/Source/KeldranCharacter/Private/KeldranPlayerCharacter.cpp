@@ -14,6 +14,10 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "InputAction.h"
+#include "InputMappingContext.h"
+#include "KeldranAbilitySystemComponent.h"
+#include "KeldranGameplayTags.h"
 
 AKeldranPlayerCharacter::AKeldranPlayerCharacter()
 {
@@ -39,6 +43,14 @@ AKeldranPlayerCharacter::AKeldranPlayerCharacter()
 	StartingAbilities.Add(UGA_BasicAttack::StaticClass());
 	StartingAbilities.Add(UGA_ShieldBash::StaticClass());
 	StartingAbilities.Add(UGA_DefensiveStance::StaticClass());
+
+	// Default Enhanced Input assets (generated under /Game/Input); overridable in data/BP.
+	InputMapping = TSoftObjectPtr<UInputMappingContext>(FSoftObjectPath(TEXT("/Game/Input/IMC_Warden.IMC_Warden")));
+	MoveAction   = TSoftObjectPtr<UInputAction>(FSoftObjectPath(TEXT("/Game/Input/IA_Move.IA_Move")));
+	LookAction   = TSoftObjectPtr<UInputAction>(FSoftObjectPath(TEXT("/Game/Input/IA_Look.IA_Look")));
+	AbilityActions.Add(TSoftObjectPtr<UInputAction>(FSoftObjectPath(TEXT("/Game/Input/IA_Ability1.IA_Ability1"))));
+	AbilityActions.Add(TSoftObjectPtr<UInputAction>(FSoftObjectPath(TEXT("/Game/Input/IA_Ability2.IA_Ability2"))));
+	AbilityActions.Add(TSoftObjectPtr<UInputAction>(FSoftObjectPath(TEXT("/Game/Input/IA_Ability3.IA_Ability3"))));
 }
 
 void AKeldranPlayerCharacter::PossessedBy(AController* NewController)
@@ -98,23 +110,48 @@ void AKeldranPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
 			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
 		{
-			if (InputMapping)
+			if (UInputMappingContext* IMC = InputMapping.LoadSynchronous())
 			{
-				Subsystem->AddMappingContext(InputMapping, 0);
+				Subsystem->AddMappingContext(IMC, 0);
 			}
 		}
 	}
 
 	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		if (MoveAction)
+		if (UInputAction* Move_IA = MoveAction.LoadSynchronous())
 		{
-			EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AKeldranPlayerCharacter::Move);
+			EIC->BindAction(Move_IA, ETriggerEvent::Triggered, this, &AKeldranPlayerCharacter::Move);
 		}
-		if (LookAction)
+		if (UInputAction* Look_IA = LookAction.LoadSynchronous())
 		{
-			EIC->BindAction(LookAction, ETriggerEvent::Triggered, this, &AKeldranPlayerCharacter::Look);
+			EIC->BindAction(Look_IA, ETriggerEvent::Triggered, this, &AKeldranPlayerCharacter::Look);
 		}
+		void (AKeldranPlayerCharacter::* Handlers[3])() = {
+			&AKeldranPlayerCharacter::OnAbility1,
+			&AKeldranPlayerCharacter::OnAbility2,
+			&AKeldranPlayerCharacter::OnAbility3 };
+		for (int32 i = 0; i < AbilityActions.Num() && i < 3; ++i)
+		{
+			if (UInputAction* Ability_IA = AbilityActions[i].LoadSynchronous())
+			{
+				EIC->BindAction(Ability_IA, ETriggerEvent::Started, this, Handlers[i]);
+			}
+		}
+	}
+}
+
+void AKeldranPlayerCharacter::ActivateAbilitySlot(int32 SlotIndex)
+{
+	static const FGameplayTag SlotTags[3] = {
+		Tag_Input_Ability_Slot1, Tag_Input_Ability_Slot2, Tag_Input_Ability_Slot3 };
+	if (SlotIndex < 0 || SlotIndex >= 3)
+	{
+		return;
+	}
+	if (UKeldranAbilitySystemComponent* KASC = Cast<UKeldranAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		KASC->ActivateAbilityByInputTag(SlotTags[SlotIndex]);
 	}
 }
 

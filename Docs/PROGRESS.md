@@ -235,6 +235,18 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
 - note: automation tests are EditorContext -> run without -game (editor commandlet), not -game.
 - resume here: M3-6 (MetaHuman character via MetaHumanGenerator toolset; then Mixamo anims)
 
+## 2026-07-02 | M3-6 | DONE — Enhanced Input wired (player is controllable)
+- change: The slice previously had input *code* but no input *assets*, so the pawn couldn't
+  move or attack in PIE. Created the Enhanced Input assets under /Game/Input via new
+  Tools/gen/build_input_assets.py: IA_Move/IA_Look (Axis2D), IA_Ability1/2/3 (bool), and
+  IMC_Warden binding WASD->move (SwizzleAxis/Negate modifiers), Mouse2D->look, keys 1/2/3->
+  abilities. Player character loads them by soft-ref (no BP needed) and binds the 3 ability
+  keys to ASC ActivateAbilityByInputTag; each Warden ability now sets its InputTag (Slot1-3).
+- build: pass   tests: 10/10 pass (added Keldran.Input.AbilityTags + Keldran.Input.MappingContext)   gauntlet: n-a
+- verify: PIE loads all /Game/Input assets with no load errors; pawn possessed w/ 3 abilities;
+  IMC dump confirms 8 mappings w/ correct modifiers. Live keyboard playtest is the user's to run.
+- resume here: M3-7 (MetaHuman character via MetaHumanGenerator toolset — needs Epic login in editor)
+
 ## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
 - MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
   USoundWave/MetaSounds audio wiring, more generated icons/text.
