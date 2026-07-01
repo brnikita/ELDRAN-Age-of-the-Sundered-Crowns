@@ -1,75 +1,89 @@
-"""Minimal MCP (HTTP streamable) client for the Unreal Editor MCP server (127.0.0.1:8000/mcp).
-Handles the session handshake + SSE framing so we can drive the editor from the shell.
+"""MCP client for the Unreal Editor MCP server (127.0.0.1:8000/mcp).
+
+The server speaks streamable-HTTP: initialize returns JSON; tool calls stream the result
+back on the POST connection as SSE (`event: message` / `data: {...}`). We use curl -N for
+robust streaming (urllib buffers poorly here).
 
 Usage:
   python mcp_client.py list_toolsets
-  python mcp_client.py describe '{"toolset":"<name>"}'
-  python mcp_client.py call '{"name":"<tool>","arguments":{...}}'   # via the call_tool meta-tool
-  python mcp_client.py raw '{"name":"<tool>","arguments":{...}}'    # direct tools/call
+  python mcp_client.py describe_toolset '{"toolset_name":"UMGToolSet.UMGToolSet"}'
+  python mcp_client.py call_tool '{"tool_name":"...","arguments_json":"{...}"}'
 """
 import json
-import re
+import subprocess
 import sys
-import urllib.request
 
 URL = "http://127.0.0.1:8000/mcp"
-HEADERS = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"}
+TIMEOUT = 120
 
 
-def _post(body, sid=None):
-    h = dict(HEADERS)
-    if sid:
-        h["Mcp-Session-Id"] = sid
-    req = urllib.request.Request(URL, data=json.dumps(body).encode(), headers=h, method="POST")
-    resp = urllib.request.urlopen(req, timeout=60)
-    sid_out = resp.headers.get("Mcp-Session-Id", sid)
-    raw = resp.read().decode("utf-8", "replace")
-    # SSE framing: lines like "data: {...}". Grab the last JSON object.
-    objs = re.findall(r"\{.*\}", raw, re.S)
-    data = json.loads(objs[-1]) if objs else {}
-    return data, sid_out
+def _curl(args, body, timeout=TIMEOUT):
+    cmd = ["curl", "-s", "-N", "-m", str(timeout), "-X", "POST", URL,
+           "-H", "Content-Type: application/json",
+           "-H", "Accept: application/json, text/event-stream"] + args + \
+          ["-d", json.dumps(body)]
+    out = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 10)
+    return out.stdout
+
+
+def _curl_headers(body):
+    cmd = ["curl", "-s", "-D", "-", "-o", "NUL", "-m", "15", "-X", "POST", URL,
+           "-H", "Content-Type: application/json",
+           "-H", "Accept: application/json, text/event-stream",
+           "-d", json.dumps(body)]
+    out = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    for line in out.stdout.splitlines():
+        if line.lower().startswith("mcp-session-id:"):
+            return line.split(":", 1)[1].strip()
+    return None
 
 
 def session():
-    init = {"jsonrpc": "2.0", "id": 1, "method": "initialize",
-            "params": {"protocolVersion": "2024-11-05", "capabilities": {},
-                       "clientInfo": {"name": "keldran", "version": "1"}}}
-    _data, sid = _post(init)
-    _post({"jsonrpc": "2.0", "method": "notifications/initialized"}, sid)
+    sid = _curl_headers({"jsonrpc": "2.0", "id": 1, "method": "initialize",
+                         "params": {"protocolVersion": "2024-11-05", "capabilities": {},
+                                    "clientInfo": {"name": "keldran", "version": "1"}}})
+    if not sid:
+        sys.exit("no session id — is the editor (MCP server) running?")
+    _curl(["-H", f"Mcp-Session-Id: {sid}"],
+          {"jsonrpc": "2.0", "method": "notifications/initialized"}, timeout=10)
     return sid
 
 
-def call(method, params, sid=None):
+def parse_sse(raw):
+    """Return the last complete JSON object from an SSE stream."""
+    result = None
+    for line in raw.splitlines():
+        if line.startswith("data:"):
+            payload = line[5:].strip()
+            try:
+                result = json.loads(payload)
+            except json.JSONDecodeError:
+                pass
+    return result
+
+
+def tool(name, arguments, sid=None, timeout=TIMEOUT):
     if sid is None:
         sid = session()
-    data, _ = _post({"jsonrpc": "2.0", "id": 2, "method": method, "params": params}, sid)
-    return data
-
-
-def tool(name, arguments=None, sid=None):
-    return call("tools/call", {"name": name, "arguments": arguments or {}}, sid)
-
-
-def _text(result):
-    # MCP tool results are usually {content:[{type:text,text:...}]}
+    raw = _curl(["-H", f"Mcp-Session-Id: {sid}"],
+                {"jsonrpc": "2.0", "id": 7, "method": "tools/call",
+                 "params": {"name": name, "arguments": arguments or {}}}, timeout)
+    data = parse_sse(raw)
+    if not data:
+        return f"<no response; raw head: {raw[:200]!r}>"
+    if "error" in data:
+        return "ERROR: " + json.dumps(data["error"])
     try:
-        parts = result["result"]["content"]
-        return "\n".join(p.get("text", "") for p in parts if p.get("type") == "text")
+        parts = data["result"]["content"]
+        text = "\n".join(p.get("text", "") for p in parts if p.get("type") == "text")
+        if data["result"].get("isError"):
+            text = "TOOL ERROR:\n" + text
+        return text
     except Exception:
-        return json.dumps(result, indent=2)
+        return json.dumps(data, indent=2)
 
 
 if __name__ == "__main__":
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "list_toolsets"
-    arg = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
-    sid = session()
-    if cmd == "list_toolsets":
-        print(_text(tool("list_toolsets", {}, sid)))
-    elif cmd == "describe":
-        print(_text(tool("describe_toolset", arg, sid)))
-    elif cmd == "call":
-        print(_text(tool("call_tool", arg, sid)))
-    elif cmd == "raw":
-        print(_text(tool(arg["name"], arg.get("arguments", {}), sid)))
-    else:
-        print(_text(tool(cmd, arg, sid)))
+    name = sys.argv[1] if len(sys.argv) > 1 else "list_toolsets"
+    args = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
+    print(tool(name, args))

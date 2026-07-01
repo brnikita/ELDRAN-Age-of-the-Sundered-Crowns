@@ -92,6 +92,42 @@
     {
       "Name": "ToolsetRegistry",
       "Enabled": true
+    },
+    {
+      "Name": "EditorToolset",
+      "Enabled": true
+    },
+    {
+      "Name": "UMGToolSet",
+      "Enabled": true
+    },
+    {
+      "Name": "GASToolsets",
+      "Enabled": true
+    },
+    {
+      "Name": "GameplayTagsToolset",
+      "Enabled": true
+    },
+    {
+      "Name": "DataRegistryToolset",
+      "Enabled": true
+    },
+    {
+      "Name": "MetaHumanGenerator",
+      "Enabled": true
+    },
+    {
+      "Name": "PCGToolset",
+      "Enabled": true
+    },
+    {
+      "Name": "SequencerAnimMixerToolset",
+      "Enabled": true
+    },
+    {
+      "Name": "MCPClientToolset",
+      "Enabled": true
     }
   ]
 }
