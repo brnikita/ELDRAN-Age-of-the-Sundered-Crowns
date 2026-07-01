@@ -247,6 +247,22 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
   IMC dump confirms 8 mappings w/ correct modifiers. Live keyboard playtest is the user's to run.
 - resume here: M3-7 (MetaHuman character via MetaHumanGenerator toolset — needs Epic login in editor)
 
+## 2026-07-02 | M3-7 | DONE — abilities deal real damage/stun/buff (was a live-play gap)
+- change: The Warden abilities referenced DamageEffect/StunEffect/BuffEffect but nothing assigned
+  them, so in live PIE attacks played a sound and dealt ZERO damage (the combat test passed only
+  because it built its own GE). Added native GameplayEffect classes (KeldranGameplayEffects.h/.cpp):
+  UGE_WardenDamage (Instant + KeldranDamageExecution), UGE_WardenStun (2s, grants State.Stunned via
+  a TargetTagsGameplayEffectComponent), UGE_WardenBuffDefense (8s, +15 Armor). Assigned them in the
+  ability constructors. Gotcha: FindOrAddComponent() does NewObject and crashes in a UObject ctor ->
+  create the tag component with CreateDefaultSubobject and append to GEComponents.
+- build: pass   tests: 12/12 pass (added Keldran.Ability.EffectsAssigned + Keldran.Ability.DamageApplies)   gauntlet: n-a
+- verify: DamageApplies spawns a mob, applies the REAL UGE_WardenDamage via SetByCaller, asserts
+  health dropped -> live combat now actually works.
+- MetaHuman note: character CREATE + body-shape edits work offline, but set_skin_tone asserts
+  (BodyTexture) and CRASHES the editor without the MetaHuman "Optional Content" (Texture Synthesis)
+  pack. Skin/full-character needs the user to install that content via the Epic Launcher. BLOCKED.
+- resume here: M3-8 (enemy nameplates over mobs — autonomous), then MetaHuman once content installed.
+
 ## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
 - MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
   USoundWave/MetaSounds audio wiring, more generated icons/text.
