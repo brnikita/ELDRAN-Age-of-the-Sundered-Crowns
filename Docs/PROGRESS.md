@@ -225,6 +225,16 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
   granted: 3)"; viewport screenshot shows HP/MP/SP 100/100 bars + 3 icon action bar.
 - resume here: M3-5 (import generated audio as USoundWave + MetaSounds; then MetaHuman character)
 
+## 2026-07-02 | M3-5 | DONE — audio imported + ability SFX wired
+- change: Converted the 8 generated ElevenLabs clips (mp3) to 16-bit PCM WAV via ffmpeg and
+  imported them as USoundWave under /Game/Audio/{SFX,VO} (new Tools/gen/import_audio.py
+  commandlet). Wired the 3 ability SFX to their abilities: base UKeldranGameplayAbility gains
+  an ActivationSound (TSoftObjectPtr<USoundBase>) + PlayActivationSound() (server-silent);
+  UGA_BasicAttack/ShieldBash/DefensiveStance set their cue and play it on ActivateAbility.
+- build: pass   tests: 8/8 pass (editor-context automation, exit 0)   gauntlet: n-a
+- note: automation tests are EditorContext -> run without -game (editor commandlet), not -game.
+- resume here: M3-6 (MetaHuman character via MetaHumanGenerator toolset; then Mixamo anims)
+
 ## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
 - MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
   USoundWave/MetaSounds audio wiring, more generated icons/text.

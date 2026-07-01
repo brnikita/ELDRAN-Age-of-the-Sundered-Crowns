@@ -1,6 +1,24 @@
 // Copyright KELDRAN.
 #include "KeldranWardenAbilities.h"
 
+UGA_BasicAttack::UGA_BasicAttack()
+{
+	ActivationSound = TSoftObjectPtr<USoundBase>(
+		FSoftObjectPath(TEXT("/Game/Audio/SFX/basic_attack.basic_attack")));
+}
+
+UGA_ShieldBash::UGA_ShieldBash()
+{
+	ActivationSound = TSoftObjectPtr<USoundBase>(
+		FSoftObjectPath(TEXT("/Game/Audio/SFX/shield_bash.shield_bash")));
+}
+
+UGA_DefensiveStance::UGA_DefensiveStance()
+{
+	ActivationSound = TSoftObjectPtr<USoundBase>(
+		FSoftObjectPath(TEXT("/Game/Audio/SFX/defensive_stance.defensive_stance")));
+}
+
 void UGA_BasicAttack::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	const FGameplayEventData* TriggerEventData)
@@ -10,6 +28,7 @@ void UGA_BasicAttack::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		return;
 	}
+	PlayActivationSound();
 	if (AActor* Target = FindMeleeTargetActor(Range))
 	{
 		ApplyEffectToActor(Target, DamageEffect, BaseDamage);
@@ -26,6 +45,7 @@ void UGA_ShieldBash::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		return;
 	}
+	PlayActivationSound();
 	if (AActor* Target = FindMeleeTargetActor(Range))
 	{
 		ApplyEffectToActor(Target, DamageEffect, BaseDamage);
@@ -43,6 +63,7 @@ void UGA_DefensiveStance::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		return;
 	}
+	PlayActivationSound();
 	// Self-buff: apply to the avatar.
 	ApplyEffectToActor(GetAvatarActorFromActorInfo(), BuffEffect, 0.f);
 	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);

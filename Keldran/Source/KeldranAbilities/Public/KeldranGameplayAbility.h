@@ -7,6 +7,8 @@
 #include "GameplayTagContainer.h"
 #include "KeldranGameplayAbility.generated.h"
 
+class USoundBase;
+
 UCLASS()
 class KELDRANABILITIES_API UKeldranGameplayAbility : public UGameplayAbility
 {
@@ -19,7 +21,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Keldran|Ability")
 	FGameplayTag InputTag;
 
+	/** SFX played at the avatar's location when the ability activates (generated cue). */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Keldran|Ability")
+	TSoftObjectPtr<USoundBase> ActivationSound;
+
 protected:
+	/** Play ActivationSound at the avatar location (no-op on dedicated server / if unset). */
+	void PlayActivationSound() const;
+
 	/** Nearest other pawn with an ASC within Range in front of the avatar (melee target). */
 	AActor* FindMeleeTargetActor(float Range) const;
 

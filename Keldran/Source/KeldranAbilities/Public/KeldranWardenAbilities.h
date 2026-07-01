@@ -14,6 +14,7 @@ class KELDRANABILITIES_API UGA_BasicAttack : public UKeldranGameplayAbility
 {
 	GENERATED_BODY()
 public:
+	UGA_BasicAttack();
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") TSubclassOf<UGameplayEffect> DamageEffect;
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") float BaseDamage = 15.f;
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") float Range = 200.f;
@@ -29,6 +30,7 @@ class KELDRANABILITIES_API UGA_ShieldBash : public UKeldranGameplayAbility
 {
 	GENERATED_BODY()
 public:
+	UGA_ShieldBash();
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") TSubclassOf<UGameplayEffect> DamageEffect;
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") TSubclassOf<UGameplayEffect> StunEffect;
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") float BaseDamage = 8.f;
@@ -45,6 +47,7 @@ class KELDRANABILITIES_API UGA_DefensiveStance : public UKeldranGameplayAbility
 {
 	GENERATED_BODY()
 public:
+	UGA_DefensiveStance();
 	UPROPERTY(EditDefaultsOnly, Category = "Keldran|Ability") TSubclassOf<UGameplayEffect> BuffEffect;
 
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle,

@@ -5,6 +5,8 @@
 #include "AbilitySystemGlobals.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/OverlapResult.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 #include "KeldranGameplayTags.h"
 
 UKeldranGameplayAbility::UKeldranGameplayAbility()
@@ -13,6 +15,24 @@ UKeldranGameplayAbility::UKeldranGameplayAbility()
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	// Server activates; client predicts where supported.
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
+}
+
+void UKeldranGameplayAbility::PlayActivationSound() const
+{
+	const AActor* Avatar = GetAvatarActorFromActorInfo();
+	if (!Avatar || ActivationSound.IsNull())
+	{
+		return;
+	}
+	const UWorld* World = Avatar->GetWorld();
+	if (!World || World->GetNetMode() == NM_DedicatedServer)
+	{
+		return; // audio is a local-client concern
+	}
+	if (USoundBase* Sound = ActivationSound.LoadSynchronous())
+	{
+		UGameplayStatics::PlaySoundAtLocation(Avatar, Sound, Avatar->GetActorLocation());
+	}
 }
 
 AActor* UKeldranGameplayAbility::FindMeleeTargetActor(float Range) const
