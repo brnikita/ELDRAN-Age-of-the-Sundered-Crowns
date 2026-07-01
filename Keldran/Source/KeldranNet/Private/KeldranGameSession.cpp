@@ -4,6 +4,13 @@
 
 FString AKeldranGameSession::ApproveLogin(const FString& Options)
 {
+	// Tickets are a dedicated-server concern (gateway-issued). PIE/standalone/listen
+	// sessions have no gateway in the loop and admit local players normally.
+	if (GetNetMode() != NM_DedicatedServer)
+	{
+		return Super::ApproveLogin(Options);
+	}
+
 	const FString Ticket = UGameplayStatics::ParseOption(Options, TEXT("token"));
 	if (Ticket.IsEmpty())
 	{

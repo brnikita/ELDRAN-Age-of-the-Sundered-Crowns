@@ -2,6 +2,7 @@
 #include "VaelsRestGameMode.h"
 #include "KeldranPlayerCharacter.h"
 #include "KeldranGameSession.h"
+#include "KeldranHUD.h"
 #include "KeldranPlayerState.h"
 #include "KeldranPersistenceSubsystem.h"
 #include "GameFramework/PlayerController.h"
@@ -13,6 +14,7 @@ AVaelsRestGameMode::AVaelsRestGameMode()
 {
 	DefaultPawnClass = AKeldranPlayerCharacter::StaticClass();
 	GameSessionClass = AKeldranGameSession::StaticClass(); // ticket-gated logins
+	HUDClass = AKeldranHUD::StaticClass();                 // spawns WBP_HUD on local clients
 }
 
 FString AVaelsRestGameMode::InitNewPlayer(APlayerController* NewPlayerController,

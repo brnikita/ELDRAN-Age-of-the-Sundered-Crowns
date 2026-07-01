@@ -12,6 +12,9 @@ public class KeldranUI : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"UMG",
+			"GameplayAbilities",
+			"GameplayTags",
+			"KeldranAbilities",
 			"Slate",
 			"SlateCore"
 		});

@@ -208,6 +208,23 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
   MetaSounds wiring = remaining editor step.)
 - Note: gen pipeline writes to <repo>/Content; import_textures.py bridges into the UE project.
 
+## 2026-07-02 | M3-4 | DONE — HUD live in PIE
+- change: In-game HUD via new `AKeldranHUD` (KeldranUI module). C++ `DrawHUD` renders live
+  Health/Mana/Stamina bars (read from the owning player's GAS attributes) bottom-left, and an
+  action bar bottom-center showing the 3 generated Warden ability icons (basic attack, shield
+  bash, defensive stance). Wired as `HUDClass` on `VaelsRestGameMode`.
+- Also authored `WBP_HUD` + `BP_KeldranHUD` in-editor via the UMG toolset (kept as data assets;
+  the shipped HUD is the C++ one for robustness — UMG windows come with M4 UI work).
+- `KeldranGameSession::ApproveLogin` now admits local players in non-dedicated (PIE/standalone)
+  net modes so the slice is playable in-editor; dedicated server still requires a gateway ticket.
+- Tooling: `Tools/mcp/mcp_client.py` rewritten to drive the editor's streamable-HTTP MCP server
+  (SSE parsing, `call_tool` helper); enabled 9 editor toolset plugins; registered UE 5.8 in HKCU
+  so the .uproject GUID resolves (no more Convert Project dialog).
+- build: pass   tests: n-a (visual; verified via PIE screenshot)   gauntlet: n-a
+- verify: PIE on L1_VaelsRest — log "HUD ready (icons loaded: 3)" + "pawn possessed (abilities
+  granted: 3)"; viewport screenshot shows HP/MP/SP 100/100 bars + 3 icon action bar.
+- resume here: M3-5 (import generated audio as USoundWave + MetaSounds; then MetaHuman character)
+
 ## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
 - MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
   USoundWave/MetaSounds audio wiring, more generated icons/text.

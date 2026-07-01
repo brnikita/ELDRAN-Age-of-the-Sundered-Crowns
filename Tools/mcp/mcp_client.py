@@ -50,7 +50,7 @@ def session():
 
 
 def parse_sse(raw):
-    """Return the last complete JSON object from an SSE stream."""
+    """Return the JSON payload from either an SSE stream or a plain JSON response."""
     result = None
     for line in raw.splitlines():
         if line.startswith("data:"):
@@ -59,6 +59,11 @@ def parse_sse(raw):
                 result = json.loads(payload)
             except json.JSONDecodeError:
                 pass
+    if result is None and raw.lstrip().startswith("{"):
+        try:
+            result = json.loads(raw)
+        except json.JSONDecodeError:
+            pass
     return result
 
 
@@ -83,7 +88,24 @@ def tool(name, arguments, sid=None, timeout=TIMEOUT):
         return json.dumps(data, indent=2)
 
 
+def call(toolset, tool_name, arguments=None, sid=None, timeout=TIMEOUT):
+    """Invoke a toolset tool through the call_tool meta-tool."""
+    args = {"tool_name": tool_name, "arguments": arguments or {}}
+    if toolset:
+        args["toolset_name"] = toolset
+    return tool("call_tool", args, sid, timeout)
+
+
 if __name__ == "__main__":
-    name = sys.argv[1] if len(sys.argv) > 1 else "list_toolsets"
-    args = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
-    print(tool(name, args))
+    # Forms:
+    #   mcp_client.py list_toolsets
+    #   mcp_client.py describe_toolset '{"toolset_name":"..."}'
+    #   mcp_client.py <toolset_name> <tool_name> ['<json args>']
+    if len(sys.argv) >= 3 and not sys.argv[2].lstrip().startswith("{"):
+        ts, tn = sys.argv[1], sys.argv[2]
+        args = json.loads(sys.argv[3]) if len(sys.argv) > 3 else {}
+        print(call(ts, tn, args))
+    else:
+        name = sys.argv[1] if len(sys.argv) > 1 else "list_toolsets"
+        args = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
+        print(tool(name, args))
