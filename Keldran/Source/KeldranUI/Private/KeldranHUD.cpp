@@ -4,8 +4,11 @@
 #include "Engine/Texture2D.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
+#include "AbilitySystemGlobals.h"
 #include "GameFramework/PlayerState.h"
+#include "EngineUtils.h"
 #include "KeldranAttributeSet.h"
+#include "KeldranMobCharacter.h"
 
 namespace
 {
@@ -49,6 +52,65 @@ void AKeldranHUD::DrawBar(float X, float Y, float W, float H, float Fraction,
 	DrawText(Text, FLinearColor::White, X + 6, Y + H * 0.5f - 8.f, nullptr, 1.0f);
 }
 
+void AKeldranHUD::DrawMobNameplates()
+{
+	const UWorld* World = GetWorld();
+	const APlayerController* PC = GetOwningPlayerController();
+	if (!World || !PC || !Canvas)
+	{
+		return;
+	}
+	const FVector ViewLoc = PC->PlayerCameraManager ? PC->PlayerCameraManager->GetCameraLocation()
+		: FVector::ZeroVector;
+	const float MaxRangeSq = FMath::Square(3500.f);
+
+	for (TActorIterator<AKeldranMobCharacter> It(World); It; ++It)
+	{
+		AKeldranMobCharacter* Mob = *It;
+		if (!Mob)
+		{
+			continue;
+		}
+		if (FVector::DistSquared(ViewLoc, Mob->GetActorLocation()) > MaxRangeSq)
+		{
+			continue;
+		}
+		UAbilitySystemComponent* ASC =
+			UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Mob);
+		if (!ASC)
+		{
+			continue;
+		}
+		const float H = ASC->GetNumericAttribute(UKeldranAttributeSet::GetHealthAttribute());
+		const float HM = FMath::Max(1.f, ASC->GetNumericAttribute(UKeldranAttributeSet::GetMaxHealthAttribute()));
+		if (H <= 0.f)
+		{
+			continue; // dead mobs get no plate
+		}
+
+		// Project a point above the mob's head to screen space.
+		const FVector Head = Mob->GetActorLocation() + FVector(0, 0, 110.f);
+		const FVector Screen = Project(Head);
+		if (Screen.Z <= 0.f)
+		{
+			continue; // behind camera
+		}
+		const float BarW = 90.f, BarH = 8.f;
+		const float X = Screen.X - BarW * 0.5f;
+		const float Y = Screen.Y;
+		DrawRect(FLinearColor(0.f, 0.f, 0.f, 0.6f), X - 1, Y - 1, BarW + 2, BarH + 2);
+		DrawRect(FLinearColor(0.1f, 0.1f, 0.1f, 0.85f), X, Y, BarW, BarH);
+		DrawRect(FLinearColor(0.75f, 0.12f, 0.12f, 0.95f), X, Y, BarW * (H / HM), BarH);
+
+		const FString Name = Mob->GetDisplayName().IsEmpty()
+			? Mob->GetName() : Mob->GetDisplayName().ToString();
+		float TW, TH;
+		GetTextSize(Name, TW, TH, nullptr, 1.f);
+		DrawText(Name, FLinearColor(0.95f, 0.92f, 0.85f, 1.f),
+			Screen.X - TW * 0.5f, Y - TH - 2.f);
+	}
+}
+
 void AKeldranHUD::DrawHUD()
 {
 	Super::DrawHUD();
@@ -59,6 +121,8 @@ void AKeldranHUD::DrawHUD()
 
 	const float SizeX = Canvas->SizeX;
 	const float SizeY = Canvas->SizeY;
+
+	DrawMobNameplates();
 
 	// --- Resource bars, bottom-left ---
 	if (UAbilitySystemComponent* ASC = GetPlayerASC())

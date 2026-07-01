@@ -263,6 +263,17 @@ Every M2 Definition-of-Done assertion is verified (via the appropriate test laye
   pack. Skin/full-character needs the user to install that content via the Epic Launcher. BLOCKED.
 - resume here: M3-8 (enemy nameplates over mobs — autonomous), then MetaHuman once content installed.
 
+## 2026-07-02 | M3-8 | DONE — enemy nameplates (name + health bar over mobs)
+- change: AKeldranHUD::DrawMobNameplates iterates living mobs within 3500u, projects a point above
+  each head to screen, and draws a red health bar + the mob's DisplayName. Cached DisplayName on
+  AKeldranMobCharacter (from DT_Mobs) with a public getter. Makes combat readable — you can watch
+  an enemy's health drop as you attack.
+- build: pass   tests: 12/12 (unchanged; visual feature)   gauntlet: n-a
+- verify: PIE screenshot shows plates over Brambleback x3, Hollow Straggler, Mire Spite, Warden of
+  the Tor, each with a health bar, alongside the player HUD.
+- resume here: MetaHuman character (BLOCKED on user installing MetaHuman Optional Content), or
+  continue autonomous polish (vendor/quest UMG windows, minimap, more generated content).
+
 ## REMAINING (M3 visuals + formal packaging; needs Epic/Adobe + interactive editor)
 - MetaHuman + Mixamo character (retarget), Quixel L1 environment art, UMG HUD/nameplate widgets,
   USoundWave/MetaSounds audio wiring, more generated icons/text.

@@ -78,6 +78,7 @@ void AKeldranMobCharacter::InitFromRow()
 		GetMesh()->SetSkeletalMesh(LoadedMesh);
 	}
 
+	CachedDisplayName = Row->DisplayName;
 	CachedLootTable = Row->LootTable;
 	CachedXPReward = Row->XPReward;
 }

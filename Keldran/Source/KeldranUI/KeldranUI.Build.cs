@@ -15,6 +15,7 @@ public class KeldranUI : ModuleRules
 			"GameplayAbilities",
 			"GameplayTags",
 			"KeldranAbilities",
+			"KeldranAI",
 			"Slate",
 			"SlateCore"
 		});

@@ -26,4 +26,6 @@ private:
 	UAbilitySystemComponent* GetPlayerASC() const;
 	void DrawBar(float X, float Y, float W, float H, float Fraction,
 		const FLinearColor& Fill, const TCHAR* Label, float Current, float Max);
+	/** Floating name + health bar over each living mob within range. */
+	void DrawMobNameplates();
 };

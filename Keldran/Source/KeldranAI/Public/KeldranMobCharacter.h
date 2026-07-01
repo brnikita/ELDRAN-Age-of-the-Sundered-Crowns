@@ -29,12 +29,16 @@ public:
 
 	virtual void BeginPlay() override;
 
+	/** Localized display name from DT_Mobs (for nameplates); empty until InitFromRow runs. */
+	const FText& GetDisplayName() const { return CachedDisplayName; }
+
 protected:
 	void InitFromRow();
 	void HandleDeath();
 
 	void OnDeadTagChanged(const struct FGameplayTag CallbackTag, int32 NewCount);
 
+	FText CachedDisplayName;
 	FName CachedLootTable;
 	int32 CachedXPReward = 0;
 	bool bDeathHandled = false;
